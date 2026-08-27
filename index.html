@@ -1,771 +1,130 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#100B1E">
-  <title>Dopamodoro</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon192.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0a0d1a" />
+  <title>Dopamodoro Web</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">♡</span><span>DOPAMODORO</span></div>
+      <nav class="main-nav" id="mainNav">
+        <button class="nav-item active" data-view="dashboard"><span>▦</span>Dashboard</button>
+        <button class="nav-item" data-view="focus"><span>◷</span>Focus</button>
+        <button class="nav-item" data-view="tasks"><span>☑</span>Tasks</button>
+        <button class="nav-item" data-view="journal"><span>▤</span>Journal</button>
+        <button class="nav-item" data-view="insights"><span>▥</span>Insights</button>
+        <button class="nav-item" data-view="coach"><span>✺</span>AI Coach</button>
+        <button class="nav-item" data-view="integrations"><span>⌘</span>Integrations</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span>Settings</button>
+      </nav>
+      <section class="sidebar-card momentum-card">
+        <div class="eyebrow">TODAY'S MOMENTUM</div>
+        <div class="mini-stat"><span>Focus time</span><strong id="sideFocusTime">0m</strong></div>
+        <div class="mini-stat"><span>Sessions</span><strong id="sideSessions">0</strong></div>
+        <div class="mini-stat"><span>Completed tasks</span><strong id="sideCompleted">0</strong></div>
+        <button class="link-btn" data-jump="insights">View insights →</button>
+      </section>
+      <section class="sidebar-card quick-capture">
+        <div class="eyebrow">QUICK CAPTURE</div>
+        <textarea id="quickCaptureInput" placeholder="Add a task or note…"></textarea>
+        <button class="primary compact" id="quickCaptureBtn">Capture</button>
+      </section>
+      <div class="user-strip"><div class="avatar">H</div><div><strong>Workspace</strong><small>Focused</small></div><span>⌄</span></div>
+    </aside>
 
-    <!-- ========= STATUS BAR SPACER (safe area top) ========= -->
-    <div class="safe-top"></div>
+    <main class="main-area">
+      <header class="topbar">
+        <div><strong id="welcomeTitle">Welcome back 👋</strong><small id="welcomeSub">Build the next right thing.</small></div>
+        <div class="streak"><span>🔥</span><strong id="topStreak">0 Day Streak</strong><div class="week-dots" id="weekDots"></div></div>
+        <div class="top-actions"><button class="icon-btn" title="Notifications">♧</button><button class="icon-btn" title="Stats">▥</button></div>
+      </header>
 
-    <!-- ========= TOP HEADER ========= -->
-    <header class="top-bar">
-      <div class="brand">
-        <div class="brand-mark">🍅</div>
-        <span class="brand-name">Dopamodoro</span>
-        <span class="brand-pro hidden" id="proBadge">PRO</span>
-      </div>
-      <div class="top-bar-right">
-        <button class="go-pro-btn hidden" id="goProBtn">Go Pro</button>
-        <button class="level-chip-mini" id="levelChip" title="Achievements">
-          <span id="levelChipText">🌱 Sprout</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- ========= MAIN CONTENT AREA — one view visible at a time ========= -->
-    <main class="views">
-
-      <!-- ===== VIEW: TIMER ===== -->
-      <section class="view view-timer active" id="viewTimer">
-
-        <!-- North Star -->
-        <div class="ns-card" id="northStar"></div>
-
-        <!-- Active goal selector -->
-        <button class="goal-selector-btn" id="goalSelectorBtn">
-          <span id="goalSelectorText">🎯 Set category</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-
-        <!-- Stats strip -->
-        <div class="stats-strip">
-          <div class="stat-chip"><span class="stat-num" id="statToday">0</span><span class="stat-lbl">Today</span></div>
-          <div class="stat-chip"><span class="stat-num" id="statStreak">0</span><span class="stat-lbl">Streak 🔥</span></div>
-          <div class="stat-chip"><span class="stat-num" id="statTotal">0</span><span class="stat-lbl">All-time</span></div>
-          <div class="stat-chip"><span class="stat-num" id="statTomatoes">0</span><span class="stat-lbl">🍅</span></div>
-        </div>
-
-        <!-- Home summary -->
-        <div class="home-summary" id="homeSummary"></div>
-
-        <!-- Tomorrow launchpad — yesterday's focus, resurfaced -->
-        <div class="launchpad hidden" id="tomorrowLaunchpad"></div>
-
-        <!-- Next meeting reminder -->
-        <div class="reminder-pill hidden" id="reminderPill"></div>
-
-        <!-- Ambient next-deadline pill -->
-        <div class="deadline-strip hidden" id="deadlineStrip"></div>
-
-        <!-- Coach nudge micro-card -->
-        <div class="coach-nudge hidden" id="coachNudge"></div>
-
-        <!-- Daily wrap trigger (evening) -->
-        <div class="wrap-trigger hidden" id="wrapTrigger"></div>
-
-        <!-- Mode bar -->
-        <div class="mode-bar">
-          <button class="mode-pill active" data-mode="work">Focus</button>
-          <button class="mode-pill" data-mode="shortBreak">Short Break</button>
-          <button class="mode-pill" data-mode="longBreak">Long Break</button>
-        </div>
-
-        <!-- Timer ring + duration chips on the side -->
-        <div class="timer-section">
-          <div class="duration-chips" id="durationChips">
-            <button class="dur-chip" data-min="15">15</button>
-            <button class="dur-chip is-active" data-min="20">20</button>
-            <button class="dur-chip" data-min="25">25</button>
-            <button class="dur-chip" data-min="custom" title="Custom">+</button>
-          </div>
-
-          <div class="timer-ring-wrap">
-            <div class="timer-clouds">
-              <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="cloud c4"></div><div class="cloud c5"></div>
-            </div>
-            <div class="timer-particles">
-              <span class="pt p1"></span><span class="pt p2"></span><span class="pt p3"></span><span class="pt p4"></span>
-              <span class="pt p5"></span><span class="pt p6"></span><span class="pt p7"></span><span class="pt p8"></span>
-              <span class="pt star s1"></span><span class="pt star dim s2"></span><span class="pt star s3"></span><span class="pt star warm s4"></span>
-              <span class="pt star s5"></span><span class="pt star dim s6"></span><span class="pt star warm s7"></span><span class="pt star s8"></span>
-            </div>
-            <svg class="timer-svg" width="220" height="220" viewBox="0 0 220 220">
-              <defs>
-                <linearGradient id="timerGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#C026D3"/>
-                  <stop offset="45%" stop-color="#F43F5E"/>
-                  <stop offset="100%" stop-color="#FB923C"/>
-                </linearGradient>
-                <!-- Molten wobble: animated fractal noise displaces the glow edge so
-                     the lava ring ripples like liquid instead of a static stroke. -->
-                <filter id="lavaWarp" x="-60%" y="-60%" width="220%" height="220%">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="noise">
-                    <animate attributeName="baseFrequency" dur="14s" values="0.012 0.02; 0.02 0.03; 0.012 0.02" repeatCount="indefinite"/>
-                  </feTurbulence>
-                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
-                  <feGaussianBlur stdDeviation="3.2"/>
-                </filter>
-                <filter id="ringGlow" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="4.5"/></filter>
-              </defs>
-              <circle class="ring-bg" cx="110" cy="110" r="100"/>
-              <circle class="ring-dotted" cx="110" cy="110" r="86"/>
-              <!-- outer molten halo (wobbling), mid glow, crisp core line -->
-              <circle class="ring-lava" id="timerRingLava" cx="110" cy="110" r="100" filter="url(#lavaWarp)"/>
-              <circle class="ring-prog-glow" id="timerRingGlow" cx="110" cy="110" r="100" filter="url(#ringGlow)"/>
-              <circle class="ring-prog" id="timerRing" cx="110" cy="110" r="100"/>
-            </svg>
-            <div class="timer-thumb is-hidden" id="timerThumb"></div>
-            <div class="timer-center">
-              <div class="timer-motiv is-hidden" id="timerMotiv">
-                <svg class="timer-motiv-ic" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2c1.2 3.1-2.8 4.4-2.8 8.2a2.8 2.8 0 0 0 5.6 0c0-.9-.6-1.7-.6-2.6 1.9 1.3 3.8 4 3.8 6.8a6 6 0 1 1-12 0C6 9 9.2 7.6 12 2z"/></svg>
-                <span class="timer-motiv-txt"></span>
+      <section class="view active" id="view-dashboard">
+        <div class="dashboard-grid">
+          <div class="primary-column">
+            <section class="panel north-star-panel">
+              <div class="north-star-main">
+                <div class="panel-title-row"><h2>☆ North Star</h2><button class="secondary small" id="editNorthStarBtn">Edit goal</button></div>
+                <h3 id="northStarTitle">Choose your North Star</h3>
+                <p id="northStarDescription">Define the outcome that your tasks and focus sessions should support.</p>
               </div>
-              <div class="timer-time" id="timerTime">25:00</div>
-              <div class="timer-sub" id="timerSub">Ready to focus</div>
-              <div class="session-dots" id="sessionDots"></div>
-            </div>
+              <div class="north-star-progress">
+                <span>Overall progress</span><strong id="northStarPercent">0%</strong>
+                <div class="progress"><i id="northStarProgressBar"></i></div>
+                <small id="northStarMilestone">No milestone set</small>
+              </div>
+              <div class="north-star-milestones"><span>This week's milestones</span><div id="northStarWeekly"></div></div>
+            </section>
+
+            <section class="panel focus-panel" id="dashboardTimer"></section>
+
+            <section class="panel task-manager-panel">
+              <div class="panel-title-row wrap">
+                <div><h2>Task Manager</h2><div class="task-tabs" id="taskTabs"><button class="task-tab active" data-task-filter="all">All</button><button class="task-tab" data-task-filter="today">Today</button><button class="task-tab" data-task-filter="upcoming">Upcoming</button><button class="task-tab" data-task-filter="completed">Completed</button></div></div>
+                <div class="inline-actions"><button class="primary small" id="addTaskBtn">+ Add Task</button><button class="icon-btn" id="taskSearchBtn">⌕</button><button class="icon-btn" id="taskFilterBtn">▽</button></div>
+              </div>
+              <div class="task-table-wrap"><table class="task-table"><thead><tr><th>Task</th><th>Priority</th><th>Due</th><th>Tags</th><th>Subtasks</th><th>Attach.</th><th>Notes</th><th>Reminder</th><th>AI</th></tr></thead><tbody id="dashboardTaskBody"></tbody></table></div>
+              <div id="dashboardTaskDetail" class="task-detail-inline empty">Select a task to see full details.</div>
+            </section>
           </div>
-        </div>
 
-        <!-- Task name lives OUTSIDE the ring so long names get full width and
-             wrap to 2 lines instead of being clipped by the circle. -->
-        <div class="timer-task-line is-hidden" id="timerTaskLine"></div>
-
-        <!-- Custom duration inline input -->
-        <div class="custom-dur-input hidden" id="customDurInput">
-          <input type="number" id="customMinInput" min="1" max="120" placeholder="min" inputmode="numeric">
-          <span class="cdi-unit">min</span>
-          <button id="customMinStart">Start ▶</button>
-          <button id="customMinCancel" title="Cancel">×</button>
-        </div>
-
-        <!-- Big controls -->
-        <div class="controls">
-          <button class="btn-circle" id="resetBtn" title="Reset">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          </button>
-          <button class="btn-start" id="startBtn">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="startIcon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <span id="startLabel">Start Focus</span>
-          </button>
-          <button class="btn-circle" id="skipBtn" title="Skip / End">
-            <svg width="22" height="22" id="skipIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-          </button>
-        </div>
-
-        <!-- Today's Focus -->
-        <div class="todays-focus">
-          <div class="tf-head" id="tfHead">
-            <span class="tf-title">🎯 Today's Focus</span>
-            <span class="tf-count" id="tfCount">0 tasks</span>
-            <button class="tf-collapse" id="tfCollapse" title="Collapse">▾</button>
-          </div>
-          <div class="tf-body" id="tfBody">
-            <div class="task-pills" id="taskPills"></div>
-            <div class="task-add-row">
-              <input type="text" id="currentTaskInput" placeholder="Add a task…" maxlength="60" autocomplete="off">
-              <button class="tf-pick" id="tfPickBtn" title="Pick from your Task Manager">＋ Pick</button>
-              <button id="addTaskBtn" title="Add">+</button>
-            </div>
-          </div>
+          <aside class="coach-rail">
+            <section class="panel coach-panel"><div class="panel-title-row"><h2>✺ AI Coach <span class="beta">BETA</span></h2><button class="icon-btn" data-jump="coach">↗</button></div><div id="coachRail"></div></section>
+            <section class="panel developer-panel"><div class="panel-title-row"><h2>Developer & Integrations</h2><button class="icon-btn" data-jump="integrations">⚙</button></div><div class="integration-cards"><div><b>&lt;/&gt;</b><strong>API Ready</strong><small>Task & goal endpoints</small></div><div><b>◇</b><strong>MCP Ready</strong><small>Agent tools</small></div><div><b>⌘</b><strong>Agent Sync</strong><small>Read + organize tasks</small></div><div><b>⌁</b><strong>Webhooks</strong><small>Event-ready contract</small></div></div><button class="secondary full" data-jump="integrations">View API setup →</button></section>
+          </aside>
         </div>
       </section>
 
-      <!-- ===== VIEW: TASKS ===== -->
-      <section class="view view-tasks" id="viewTasks">
-        <div class="view-head view-head-row">
-          <h2>Tasks</h2>
-          <button class="head-action" id="openCompletedBtn">🗂 History</button>
-        </div>
-        <div class="todo-add-row">
-          <input type="text" id="todoInput" placeholder="Add a task — just one tiny thing" maxlength="200" autocomplete="off">
-          <button id="todoAddBtn" title="Add">+</button>
-        </div>
-        <div class="todo-target-row hidden" id="todoTargetRow">
-          <span class="tt-label">Add to</span>
-          <select id="todoTargetGroup"><option value="">No group</option></select>
-        </div>
-        <div class="todo-sort-row">
-          <span class="todo-sort-label">Sort</span>
-          <select id="todoSort">
-            <option value="priority">Priority (1 first)</option>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-            <option value="alpha">A → Z</option>
-            <option value="manual">Manual (drag)</option>
-          </select>
-          <span class="todo-sort-spacer"></span>
-          <span class="todo-sort-hint">⠿ drag to reorder</span>
-        </div>
-        <div class="group-add-row">
-          <input type="text" id="groupInput" placeholder="New group — e.g. Work, Personal" maxlength="40" autocomplete="off">
-          <button id="groupAddBtn" title="Add group">📁 +</button>
-        </div>
-        <div class="todo-list" id="todoList"></div>
-        <button class="todo-clear-done hidden" id="todoClearDone">Clear completed</button>
+      <section class="view" id="view-focus"><div class="page-head"><div><span class="eyebrow">DEEP WORK</span><h1>Focus</h1><p>One timer, one task, one meaningful outcome.</p></div></div><section class="panel focus-page-panel" id="focusTimer"></section></section>
+
+      <section class="view" id="view-tasks">
+        <div class="page-head"><div><span class="eyebrow">TASK SYSTEM</span><h1>Tasks</h1><p>Every task can hold enough context for you or an agent to act on it.</p></div><button class="primary" id="pageAddTaskBtn">+ New task</button></div>
+        <section class="panel">
+          <div class="task-toolbar"><div class="segmented" id="fullTaskTabs"><button class="active" data-task-filter="all">All</button><button data-task-filter="today">Today</button><button data-task-filter="upcoming">Upcoming</button><button data-task-filter="completed">Completed</button></div><input id="taskSearchInput" class="search-input" placeholder="Search tasks, notes, tags…"/><select id="taskSort"><option value="priority">Priority</option><option value="due">Due date</option><option value="updated">Recently updated</option><option value="title">A–Z</option></select></div>
+          <div class="task-table-wrap tall"><table class="task-table full-table"><thead><tr><th>Task</th><th>Status</th><th>Priority</th><th>Project</th><th>Due</th><th>Tags</th><th>Progress</th><th>Context</th></tr></thead><tbody id="fullTaskBody"></tbody></table></div>
+        </section>
       </section>
 
-      <!-- ===== VIEW: JOURNAL ===== -->
-      <section class="view view-journal" id="viewJournal">
-        <div class="view-head">
-          <h2>Journal</h2>
-        </div>
-        <div class="history-toolbar">
-          <div class="history-today" id="historyToday">Today: 0 sessions</div>
-          <div class="history-actions">
-            <button class="action-icon" id="heatmapToggleBtn" title="Focus Map">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="10" y="3" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="17" y="10" width="4" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="10" y="17" width="4" height="4" rx="1"/><rect x="17" y="17" width="4" height="4" rx="1"/></svg>
-            </button>
-            <button class="action-icon action-icon-primary" id="addManualBtn" title="Log past work">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
-          </div>
-        </div>
+      <section class="view" id="view-journal"><div class="page-head"><div><span class="eyebrow">WORK LOG</span><h1>Journal</h1><p>Sessions, notes and completed work in one timeline.</p></div><button class="primary" id="manualLogBtn">+ Log session</button></div><div class="two-col"><section class="panel"><h2>Recent activity</h2><div id="journalTimeline" class="timeline"></div></section><section class="panel"><h2>Daily reflection</h2><textarea id="dailyReflection" class="large-textarea" placeholder="What worked today? What should change tomorrow?"></textarea><button class="primary" id="saveReflectionBtn">Save reflection</button></section></div></section>
 
-        <!-- Focus Heatmap -->
-        <div class="focus-heatmap hidden" id="focusHeatmap">
-          <div id="fhmGrid"></div>
-          <div class="fhm-legend">
-            <span class="fhm-leg-label">Less</span>
-            <span class="fhm-leg-cell lvl-0"></span>
-            <span class="fhm-leg-cell lvl-1"></span>
-            <span class="fhm-leg-cell lvl-2"></span>
-            <span class="fhm-leg-cell lvl-3"></span>
-            <span class="fhm-leg-cell lvl-4"></span>
-            <span class="fhm-leg-label">More</span>
-          </div>
-        </div>
+      <section class="view" id="view-insights"><div class="page-head"><div><span class="eyebrow">PATTERNS</span><h1>Insights</h1><p>Understand how effort converts into completed work.</p></div></div><div class="stats-grid" id="insightCards"></div><div class="two-col"><section class="panel"><h2>Focus by day</h2><div class="bar-chart" id="focusChart"></div></section><section class="panel"><h2>Task flow</h2><div id="taskFlow"></div></section></div></section>
 
-        <div id="historyList"></div>
-      </section>
+      <section class="view" id="view-coach"><div class="page-head"><div><span class="eyebrow">CONTEXT-AWARE GUIDE</span><h1>AI Coach</h1><p>Uses your North Star, tasks, deadlines and recent sessions to recommend what to do next.</p></div><button class="secondary" id="refreshCoachBtn">Refresh plan</button></div><div class="coach-layout"><section class="panel"><h2>Today's recommended focus order</h2><div id="coachPriorityList"></div><h2 class="mt">Smart breakdown</h2><div id="coachBreakdown"></div></section><section class="panel coach-chat"><h2>Ask your coach</h2><div id="coachMessages" class="coach-messages"></div><div class="chat-compose"><textarea id="coachInput" placeholder="Ask me to prioritize, break down, rewrite, or organize your tasks…"></textarea><button class="primary" id="coachSendBtn">Send</button></div></section></div></section>
 
-      <!-- ===== VIEW: SETTINGS ===== -->
-      <section class="view view-settings" id="viewSettings">
-        <div class="view-head">
-          <h2>Settings</h2>
-        </div>
+      <section class="view" id="view-integrations"><div class="page-head"><div><span class="eyebrow">AGENT ACCESS</span><h1>API & MCP</h1><p>Give agents a structured way to read, create and organize your task system.</p></div></div><div class="integration-grid"><section class="panel"><h2>REST API</h2><p>Base URL used by this web app and external agents.</p><label>API Base URL<input id="apiBaseUrl" placeholder="https://your-dopamodoro-api.vercel.app/api"/></label><label>Agent API Token<input id="apiToken" type="password" placeholder="Optional bearer token"/></label><div class="stack-actions"><button class="primary" id="saveApiConfigBtn">Save connection</button><button class="secondary" id="syncNowBtn">Sync now</button></div><div class="code-card"><code>GET /tasks<br>POST /tasks<br>PATCH /tasks/:id<br>GET /north-star<br>PUT /north-star</code></div></section><section class="panel"><h2>MCP server</h2><p>Point an MCP-capable agent at the HTTP endpoint below.</p><div class="endpoint-card"><span>Endpoint</span><code id="mcpEndpoint">/api/mcp</code></div><div class="tool-list" id="mcpToolList"></div></section><section class="panel"><h2>Agent permissions</h2><label class="toggle-row"><span><strong>Read tasks</strong><small>Agent can inspect task context</small></span><input type="checkbox" id="permRead" checked></label><label class="toggle-row"><span><strong>Create tasks</strong><small>Agent can capture new work</small></span><input type="checkbox" id="permCreate" checked></label><label class="toggle-row"><span><strong>Organize tasks</strong><small>Agent can update priority, dates, tags and subtasks</small></span><input type="checkbox" id="permOrganize" checked></label><label class="toggle-row"><span><strong>Delete tasks</strong><small>Destructive access</small></span><input type="checkbox" id="permDelete"></label><button class="primary full" id="savePermissionsBtn">Save permissions</button></section></div></section>
 
-        <div class="setting-row">
-          <label>Focus Duration</label>
-          <div class="num-input"><input type="number" id="workDuration" min="1" max="90" value="25"><span>min</span></div>
-        </div>
-        <div class="setting-row">
-          <label>Short Break</label>
-          <div class="num-input"><input type="number" id="shortBreakDuration" min="1" max="30" value="5"><span>min</span></div>
-        </div>
-        <div class="setting-row">
-          <label>Long Break</label>
-          <div class="num-input"><input type="number" id="longBreakDuration" min="5" max="60" value="15"><span>min</span></div>
-        </div>
-        <div class="setting-row">
-          <label>Sessions before long break</label>
-          <div class="num-input"><input type="number" id="longBreakInterval" min="2" max="10" value="4"></div>
-        </div>
-        <div class="toggle-row">
-          <span>Auto-start breaks</span>
-          <label class="toggle"><input type="checkbox" id="autoStartBreaks"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-        </div>
-        <div class="toggle-row">
-          <span>Auto-start work</span>
-          <label class="toggle"><input type="checkbox" id="autoStartWork"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-        </div>
-        <div class="toggle-row">
-          <span>Notifications</span>
-          <label class="toggle"><input type="checkbox" id="notificationsEnabled" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-        </div>
-        <div class="toggle-row">
-          <span>Haptic feedback</span>
-          <label class="toggle"><input type="checkbox" id="hapticsEnabled" checked><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
-        </div>
-
-        <button class="btn-primary btn-full" id="saveSettings">Save settings</button>
-
-        <div class="divider"></div>
-
-        <button class="settings-link" id="openReminders">⏰ Meeting reminders</button>
-        <button class="settings-link" id="openFeedback">💬 Send feedback</button>
-        <button class="settings-link" id="openAbout">ℹ About Dopamodoro</button>
-      </section>
-
-      <!-- ===== VIEW: COACH / INSIGHTS (free) ===== -->
-      <section class="view view-coach" id="viewCoach">
-        <div class="view-head"><h2>Insights</h2></div>
-
-        <div class="cs-ring-wrap">
-          <svg class="cs-svg" width="180" height="180" viewBox="0 0 180 180">
-            <defs>
-              <linearGradient id="csGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#F59E0B"/>
-                <stop offset="100%" stop-color="#EC4899"/>
-              </linearGradient>
-            </defs>
-            <circle class="cs-ring-bg" cx="90" cy="90" r="78"/>
-            <circle class="cs-ring-prog" id="csRing" cx="90" cy="90" r="78"/>
-          </svg>
-          <div class="cs-center">
-            <div class="cs-score" id="csScore">0</div>
-            <div class="cs-score-lbl">Focus Score</div>
-          </div>
-        </div>
-        <div class="cs-headline" id="csLabel"></div>
-
-        <div class="cs-bars" id="csBars"></div>
-
-        <h3 class="cs-section-title">At a glance</h3>
-        <div class="cs-metrics" id="csMetrics"></div>
-
-        <h3 class="cs-section-title">What I noticed <span class="cs-section-sub" id="nsPatternsSub"></span></h3>
-        <div class="ns-patterns" id="nsPatternsBody"></div>
-
-        <h3 class="cs-section-title">Last 7 days</h3>
-        <div class="cs-week" id="csWeek"></div>
-
-        <h3 class="cs-section-title">Coach tips</h3>
-        <div class="cs-tips" id="csTips"></div>
-
-        <h3 class="cs-section-title">Time by client / project 💼</h3>
-        <div class="client-hours" id="clientHours"></div>
-
-        <h3 class="cs-section-title">Recent wins 🏆</h3>
-        <div class="win-vault" id="winVault"></div>
-      </section>
-
+      <section class="view" id="view-settings"><div class="page-head"><div><span class="eyebrow">PREFERENCES</span><h1>Settings</h1><p>Customize focus behavior and workspace defaults.</p></div></div><div class="settings-grid"><section class="panel"><h2>Focus settings</h2><label>Default focus minutes<input id="settingFocus" type="number" min="1" max="180"/></label><label>Short break minutes<input id="settingShort" type="number" min="1" max="60"/></label><label>Long break minutes<input id="settingLong" type="number" min="1" max="120"/></label><label>Long break after sessions<input id="settingLongAfter" type="number" min="1" max="12"/></label></section><section class="panel"><h2>Behavior</h2><label class="toggle-row"><span><strong>Auto-start breaks</strong><small>Start the break when focus ends</small></span><input type="checkbox" id="settingAutoBreak"></label><label class="toggle-row"><span><strong>Sounds</strong><small>Play timer completion alerts</small></span><input type="checkbox" id="settingSounds"></label><label class="toggle-row"><span><strong>Coach nudges</strong><small>Show contextual suggestions</small></span><input type="checkbox" id="settingCoach"></label><button class="primary" id="saveSettingsBtn">Save settings</button></section></div></section>
     </main>
-
-    <!-- ========= BOTTOM TAB NAV ========= -->
-    <nav class="bottom-nav">
-      <button class="tab-btn active" data-view="timer">
-        <span class="tab-icon">🍅</span>
-        <span class="tab-label">Timer</span>
-      </button>
-      <button class="tab-btn" data-view="tasks">
-        <span class="tab-icon">✓</span>
-        <span class="tab-label">Tasks</span>
-      </button>
-      <button class="tab-btn" data-view="journal">
-        <span class="tab-icon">📖</span>
-        <span class="tab-label">Journal</span>
-      </button>
-      <button class="tab-btn" data-view="coach">
-        <span class="tab-icon">🧠</span>
-        <span class="tab-label">Coach</span>
-      </button>
-      <button class="tab-btn" data-view="settings">
-        <span class="tab-icon">⚙</span>
-        <span class="tab-label">Settings</span>
-      </button>
-    </nav>
-
-    <!-- Safe area bottom -->
-    <div class="safe-bottom"></div>
   </div>
 
-  <!-- ========= TOAST ========= -->
-  <div class="toast" id="toast"></div>
-
-  <!-- ========= ONBOARDING ========= -->
-  <div class="onb-overlay hidden" id="onbOverlay">
-    <div class="onb-card">
-      <div class="onb-step active" data-step="1">
-        <div class="onb-emoji">🍅</div>
-        <h2 class="onb-title">Welcome to Dopamodoro</h2>
-        <p class="onb-sub">A Pomodoro timer built for ADHD brains. Let's set up one folder and one task — takes under a minute.</p>
-        <button class="onb-next" data-go="2">Get started →</button>
-        <button class="onb-skip" data-skip>Skip</button>
-      </div>
-      <div class="onb-step" data-step="2">
-        <div class="onb-emoji">📁</div>
-        <h2 class="onb-title">Create a folder</h2>
-        <p class="onb-sub">Folders are your categories — like “Work”, a client's name, or “Personal”. Tasks live inside them.</p>
-        <input type="text" id="onbFolder" maxlength="40" placeholder="e.g. Work, Client X, Personal">
-        <button class="onb-next" id="onbCreateFolder">Create folder →</button>
-        <button class="onb-skip" data-go="3">Skip for now</button>
-      </div>
-      <div class="onb-step" data-step="3">
-        <div class="onb-emoji">🎯</div>
-        <h2 class="onb-title">Add your first task</h2>
-        <p class="onb-sub">One tiny thing. The hardest part is just starting.</p>
-        <input type="text" id="onbTask" maxlength="60" placeholder="e.g. Draft the homepage">
-        <button class="onb-next" id="onbFinish">Add &amp; start focusing 🚀</button>
-        <button class="onb-skip" data-skip>Skip</button>
-      </div>
+  <div class="modal-backdrop hidden" id="taskModalBackdrop">
+    <div class="modal task-modal">
+      <header><div><span class="eyebrow">TASK DETAILS</span><h2 id="taskModalHeading">New task</h2></div><button class="icon-btn" id="closeTaskModal">×</button></header>
+      <form id="taskForm">
+        <input type="hidden" id="taskId" />
+        <div class="form-grid two"><label>Task title<input id="taskTitle" maxlength="180" required /></label><label>Project / group<input id="taskProject" placeholder="e.g. DOPAMODORO"/></label></div>
+        <label>Description<textarea id="taskDescription" rows="4" placeholder="Clear outcome, context, requirements, acceptance notes…"></textarea></label>
+        <div class="form-grid four"><label>Status<select id="taskStatus"><option value="todo">To do</option><option value="in_progress">In progress</option><option value="blocked">Blocked</option><option value="done">Done</option></select></label><label>Priority<select id="taskPriority"><option value="urgent">Urgent</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label><label>Due date<input type="date" id="taskDueDate"/></label><label>Estimate (min)<input type="number" id="taskEstimate" min="0"/></label></div>
+        <div class="form-grid two"><label>Tags<input id="taskTags" placeholder="design, dev, marketing"/></label><label>Reminder<input type="datetime-local" id="taskReminder"/></label></div>
+        <label>Notes<textarea id="taskNotes" rows="4" placeholder="Working notes, decisions, constraints, handoff context…"></textarea></label>
+        <section class="editor-section"><div class="editor-head"><h3>Subtasks</h3><button type="button" class="secondary small" id="addSubtaskBtn">+ Add subtask</button></div><div id="subtaskEditor"></div></section>
+        <section class="editor-section"><div class="editor-head"><h3>Attachments & links</h3><label class="secondary small file-button">+ Attach file<input type="file" id="attachmentInput" multiple hidden /></label></div><div id="attachmentEditor"></div><div class="link-add-row"><input id="linkLabel" placeholder="Link label"/><input id="linkUrl" placeholder="https://…"/><button type="button" class="secondary" id="addLinkBtn">Add link</button></div><div id="linkEditor"></div></section>
+        <section class="editor-section"><div class="editor-head"><h3>Agent context</h3><span class="muted">Structured instructions available via API/MCP</span></div><div class="form-grid two"><label>Definition of done<textarea id="taskDefinition" rows="3"></textarea></label><label>Agent instructions<textarea id="taskAgentInstructions" rows="3" placeholder="How an agent should approach this task…"></textarea></label></div></section>
+        <footer class="modal-actions"><button type="button" class="danger ghost hidden" id="deleteTaskBtn">Delete</button><span></span><button type="button" class="secondary" id="cancelTaskBtn">Cancel</button><button class="primary" type="submit">Save task</button></footer>
+      </form>
     </div>
   </div>
 
-  <!-- ========= TASK DETAIL MODAL (bottom sheet) ========= -->
-  <div class="sheet hidden" id="taskDetailSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3 id="tdHeader">Task</h3>
-        <button class="sheet-close" id="closeTaskDetail">×</button>
-      </div>
-      <div class="sheet-body">
-        <label>Task</label>
-        <input type="text" id="tdText" maxlength="200">
+  <div class="modal-backdrop hidden" id="northStarModalBackdrop"><div class="modal small-modal"><header><div><span class="eyebrow">DIRECTION</span><h2>Edit North Star</h2></div><button class="icon-btn" id="closeNorthStarModal">×</button></header><form id="northStarForm"><label>North Star title<input id="nsTitle" required/></label><label>Why it matters<textarea id="nsDescription" rows="3"></textarea></label><div class="form-grid two"><label>Current milestone<input id="nsMilestone"/></label><label>Target date<input id="nsTargetDate" type="date"/></label></div><label>Progress %<input id="nsProgress" type="number" min="0" max="100"/></label><label>Weekly milestones<textarea id="nsWeekly" rows="4" placeholder="One milestone per line"></textarea></label><footer class="modal-actions"><span></span><button type="button" class="secondary" id="cancelNorthStarBtn">Cancel</button><button class="primary">Save goal</button></footer></form></div></div>
 
-        <label>Priority — 1 = most important</label>
-        <div class="pri-picker" id="tdPri">
-          <button data-pri="1" class="pri-btn pri-1">1</button>
-          <button data-pri="2" class="pri-btn pri-2">2</button>
-          <button data-pri="3" class="pri-btn pri-3">3</button>
-          <button data-pri="4" class="pri-btn pri-4">4</button>
-          <button data-pri="5" class="pri-btn pri-5">5</button>
-        </div>
-
-        <label>Due date</label>
-        <div class="td-due-row">
-          <input type="date" id="tdDue">
-          <button type="button" id="tdDueClear" class="btn-link-red">Clear</button>
-        </div>
-
-        <label>Group</label>
-        <select id="tdGroup" class="td-select"><option value="">No group</option></select>
-
-        <label>Notes &amp; ideas</label>
-        <div class="note-list" id="tdNotesList"></div>
-        <div class="note-add-row">
-          <textarea id="tdNoteInput" rows="2" placeholder="Add an idea, link, context…"></textarea>
-          <button id="tdNoteAdd">+</button>
-        </div>
-
-        <label>Subtasks</label>
-        <div class="subtask-list" id="tdSubtaskList"></div>
-        <div class="subtask-add-row">
-          <input type="text" id="tdSubtaskInput" placeholder="Break it down…">
-          <button id="tdSubtaskAdd">+</button>
-        </div>
-
-        <div class="sheet-actions">
-          <button class="btn-link-red" id="tdDelete">🗑 Delete</button>
-          <button class="btn-primary btn-full" id="tdSave">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= POST-SESSION TASK REVIEW ========= -->
-  <div class="sheet hidden" id="taskReviewSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Session done 🍅</h3>
-        <button class="sheet-close" id="closeTaskReview">×</button>
-      </div>
-      <div class="sheet-body" id="taskReviewBody"></div>
-      <div class="sheet-actions">
-        <button class="btn-link-red" id="trSkip">Not yet</button>
-        <button class="btn-primary btn-full" id="trSave">Mark done ✓</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= MANUAL ENTRY MODAL ========= -->
-  <div class="sheet hidden" id="manualEntrySheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Log past work ✎</h3>
-        <button class="sheet-close" id="closeManualEntry">×</button>
-      </div>
-      <div class="sheet-body">
-        <label>Date</label>
-        <input type="date" id="meDate">
-        <label>Duration (minutes)</label>
-        <input type="number" id="meDuration" min="1" max="480" value="25">
-        <label>What did you work on?</label>
-        <input type="text" id="meTask" maxlength="200" placeholder="The thing you did">
-
-        <div class="sheet-actions">
-          <button class="btn-link-red" id="meCancel">Cancel</button>
-          <button class="btn-primary btn-full" id="meSave">Add to journal</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= MEETING REMINDERS SHEET ========= -->
-  <div class="sheet hidden" id="remindersSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Meeting reminders ⏰</h3>
-        <button class="sheet-close" id="closeReminders">×</button>
-      </div>
-      <div class="sheet-body">
-        <p class="sheet-hint">Quick nudges so hyperfocus doesn't make you miss things.</p>
-        <label>What's the reminder?</label>
-        <input type="text" id="remLabel" maxlength="60" placeholder="e.g. Standup, Dentist, Call mom">
-        <label>When?</label>
-        <input type="datetime-local" id="remTime">
-        <button class="btn-primary btn-full" id="remAdd" style="margin-top:12px;">Add reminder</button>
-        <div class="rem-list" id="remList" style="margin-top:16px;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= TODAY'S FOCUS: FOLDER PICKER ========= -->
-  <div class="sheet hidden" id="folderPickSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Folder / category</h3>
-        <button class="sheet-close" id="closeFolderPick">×</button>
-      </div>
-      <div class="sheet-body" id="folderPickBody"></div>
-    </div>
-  </div>
-
-  <!-- ========= TODAY'S FOCUS: CLIENT / PERSONAL PICKER ========= -->
-  <div class="sheet hidden" id="clientPickSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Client / personal</h3>
-        <button class="sheet-close" id="closeClientPick">×</button>
-      </div>
-      <div class="sheet-body" id="clientPickBody"></div>
-    </div>
-  </div>
-
-  <!-- ========= TODAY'S FOCUS: PICK FROM TASK MANAGER ========= -->
-  <div class="sheet hidden" id="focusPickSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Pick from Task Manager</h3>
-        <button class="sheet-close" id="closeFocusPick">×</button>
-      </div>
-      <div class="sheet-body" id="focusPickBody"></div>
-    </div>
-  </div>
-
-  <!-- ========= GROUP ASSIGN SHEET ========= -->
-  <div class="sheet hidden" id="groupAssignSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3 id="gaTitle">Add tasks to group</h3>
-        <button class="sheet-close" id="closeGroupAssign">×</button>
-      </div>
-      <div class="sheet-body" id="groupAssignBody"></div>
-      <div class="sheet-actions">
-        <button class="btn-link-red" id="gaSkip">Skip</button>
-        <button class="btn-primary btn-full" id="gaSave">Add selected</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= COMPLETED HISTORY SHEET ========= -->
-  <div class="sheet hidden" id="completedSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Completed tasks ✅</h3>
-        <button class="sheet-close" id="closeCompleted">×</button>
-      </div>
-      <div class="sheet-body" id="completedBody"></div>
-    </div>
-  </div>
-
-  <!-- ========= DAILY WRAP SHEET ========= -->
-  <div class="sheet hidden" id="wrapSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Wrap up today 🌙</h3>
-        <button class="sheet-close" id="closeWrap">×</button>
-      </div>
-      <div class="sheet-body">
-        <p class="sheet-hint">A 30-second close-out. Even one line counts.</p>
-        <div class="wrap-label-row"><label>One win today</label><button type="button" class="wrap-suggest" data-fill="win">Suggest</button></div>
-        <input type="text" id="wrapWin" maxlength="120" placeholder="What went well?">
-        <label>One bit of friction</label>
-        <input type="text" id="wrapFriction" maxlength="120" placeholder="What slowed you down?">
-        <div class="wrap-label-row"><label>Tomorrow's #1 focus</label><button type="button" class="wrap-suggest" data-fill="tomorrow">Suggest</button></div>
-        <input type="text" id="wrapTomorrow" maxlength="120" placeholder="The one thing for tomorrow">
-        <div class="sheet-actions">
-          <button class="btn-link-red" id="wrapCancel">Cancel</button>
-          <button class="btn-primary btn-full" id="wrapSave">Wrap it up ✨</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= ACHIEVEMENTS SHEET ========= -->
-  <div class="sheet hidden" id="achievementsSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>Achievements</h3>
-        <button class="sheet-close" id="closeAchievements">×</button>
-      </div>
-      <div class="sheet-body" id="achievementsBody"></div>
-    </div>
-  </div>
-
-  <!-- ========= NORTH STAR EDIT SHEET ========= -->
-  <div class="sheet hidden" id="northStarSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>North Star ✨</h3>
-        <button class="sheet-close" id="closeNorthStar">×</button>
-      </div>
-      <div class="sheet-body">
-        <p class="sheet-hint">The big-picture goal that guides every session</p>
-        <label>Your goal</label>
-        <input type="text" id="nsInput" maxlength="60" placeholder="e.g. Launch my side project by September">
-
-        <div class="ns-why-card">
-          <div class="ns-why-hint">Picture the ideal life this goal creates. Answer a few — skip freely.</div>
-          <div class="ns-why-pager">
-            <button class="ns-why-arw" id="nsWhyPrev" type="button" aria-label="Previous pillar">‹</button>
-            <div class="ns-why-now">
-              <span class="ns-why-pillar"><span class="ns-why-pillar-ic" id="nsWhyPillarIc"></span><span id="nsWhyPillar">Wealth &amp; Things</span></span>
-              <span class="ns-why-pillar-ix" id="nsWhyPillarIx">PILLAR 1 / 8</span>
-            </div>
-            <button class="ns-why-arw" id="nsWhyNext" type="button" aria-label="Next pillar">›</button>
-          </div>
-          <div class="ns-why-q" id="nsWhyQ"></div>
-          <textarea class="ns-why-input" id="nsWhyA" rows="2" placeholder="In your words…"></textarea>
-          <div class="ns-why-nav">
-            <button class="ns-why-skip" id="nsWhySkip" type="button">Skip</button>
-            <button class="ns-why-save" id="nsWhySaveAns" type="button">Save answer</button>
-          </div>
-          <details class="ns-why-fold">
-            <summary>Saved answers (<span id="nsWhyCount">0</span>)</summary>
-            <div class="ns-why-saved" id="nsWhySaved"></div>
-          </details>
-
-          <div class="ns-vivid-block">
-            <button class="ns-vivid-btn" id="nsVividBtn" type="button"><span id="nsVividLabel">Make it vivid</span></button>
-            <div class="ns-vivid-meta" id="nsVividMeta"></div>
-            <div class="ns-vivid-result is-hidden" id="nsVividResult"></div>
-          </div>
-        </div>
-
-        <div class="sheet-actions">
-          <button class="btn-link-red" id="nsClear" style="display:none">Clear</button>
-          <button class="btn-primary btn-full" id="nsSave">Set North Star</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= GOAL SELECTOR SHEET ========= -->
-  <div class="sheet hidden" id="goalSelectorSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3>What are you working on?</h3>
-        <button class="sheet-close" id="closeGoalSelector">×</button>
-      </div>
-      <div class="sheet-body">
-        <div class="goal-list" id="goalList"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= JOURNAL ENTRY SHEET ========= -->
-  <div class="sheet hidden" id="journalEntrySheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3 id="jeHeader">Session</h3>
-        <button class="sheet-close" id="closeJournalEntry">×</button>
-      </div>
-      <div class="sheet-body">
-        <div class="je-meta" id="jeMeta"></div>
-        <div class="je-split hidden" id="jeSplit"></div>
-        <label>Notes</label>
-        <textarea id="jeNotes" rows="3" placeholder="How did this session go?"></textarea>
-        <div class="sheet-actions">
-          <button class="btn-link-red" id="jeDelete">🗑 Delete</button>
-          <button class="btn-primary btn-full" id="jeSave">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= DAY REFLECT SHEET ========= -->
-  <div class="sheet hidden" id="dayReflectSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-head">
-        <h3 id="drHeader">Reflect</h3>
-        <button class="sheet-close" id="closeDayReflect">×</button>
-      </div>
-      <div class="sheet-body">
-        <label>How did the day go?</label>
-        <textarea id="drText" rows="4" placeholder="What worked? What would you do differently?"></textarea>
-        <div class="rating-row">
-          <span class="rating-label">Rate the day</span>
-          <div class="rating-btns" id="drRating">
-            <button class="rating-btn" data-r="1">😔</button>
-            <button class="rating-btn" data-r="2">😐</button>
-            <button class="rating-btn" data-r="3">😊</button>
-            <button class="rating-btn" data-r="4">🤩</button>
-          </div>
-        </div>
-        <div class="sheet-actions">
-          <button class="btn-primary btn-full" id="drSave">Save reflection</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========= NOTIFICATION PRE-PERMISSION SHEET ========= -->
-  <div class="sheet hidden" id="notifPrimeSheet">
-    <div class="sheet-backdrop"></div>
-    <div class="sheet-content">
-      <div class="sheet-handle"></div>
-      <div class="sheet-body">
-        <div class="np-emoji">🔔</div>
-        <p class="np-body">Hyperfocus makes time disappear. Let Dopamodoro tap you on the shoulder when a session ends and <strong>nudge you before your streak breaks</strong>.</p>
-        <div class="np-actions">
-          <button class="np-enable" id="notifPrimeEnable">Turn on nudges</button>
-          <button class="np-later" id="notifPrimeLater">Not now</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Capacitor runtime (loaded by native shell at runtime — also works in browser dev) -->
-  <script src="capacitor.js"></script>
-  <script src="app.js" type="module"></script>
-  <script src="billing.js"></script>
-  <script>
-    // PWA installability for the TWA wrapper (no-op where SW is unsupported).
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
-    }
-  </script>
+  <script src="api-client.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
