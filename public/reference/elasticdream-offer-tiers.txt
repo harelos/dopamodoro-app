@@ -1,0 +1,7 @@
+Offer tiers reference
+
+Tier 1: use the existing first-package offer exactly as defined in the creative queue / supplied offer reference.
+Tier 2: existing second package + free facial serum.
+Tier 3: existing third package + free facial serum + free eye balm for tired-looking under-eye area.
+
+Keep the monetary values, displayed savings, gift values, and totals internally consistent across every offer-static variation. Do not independently change the offer arithmetic between prompts.

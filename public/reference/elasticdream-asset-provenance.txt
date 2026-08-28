@@ -1,0 +1,3 @@
+Asset provenance note
+
+The serum and eye-balm images in this folder are visual reference assets supplied for creative generation. Their source packaging may show third-party/source branding. That source branding must not be rewritten into the main mask product, and the main mask product must not be renamed from campaign context. Use each reference only for the corresponding physical item.

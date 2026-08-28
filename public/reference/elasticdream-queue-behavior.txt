@@ -1,0 +1,9 @@
+Mobile queue behavior
+
+ACTIVE: only unfinished prompts/angles.
+COMPLETED: finished prompts/angles retained in history.
+Each prompt has its own completion checkbox.
+Each angle has its own completion control.
+State persists locally after refresh/reopen.
+Layout is a single vertical mobile-first list with collapsible angles; no rightward horizontal prompt carousel.
+Opening a prompt uses the tested Android ChatGPT Method 3 intent and should not automatically mark it complete; completion is explicit so accidental opens do not lose work.

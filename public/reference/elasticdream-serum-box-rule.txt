@@ -1,0 +1,1 @@
+Do not use the source product box for the free serum unless a prompt explicitly requests it; bottle-only is preferred for bundle offer statics.

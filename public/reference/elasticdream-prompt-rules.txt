@@ -1,0 +1,9 @@
+Offer-static prompt rules
+
+1. Use the physical product exactly as supplied in the reference images. Do not invent or replace branding on packaging.
+2. The serum is a free gift only in the bundles where the offer specifies it.
+3. The eye balm is included only in the highest bundle tier.
+4. Human reference photos demonstrate mask texture/application and product handling; they are not mandatory casting references.
+5. Make people-led ads feel native, everyday, slightly imperfect, tactile, and believable rather than polished AI studio work.
+6. Hebrew visible in the ad must be copied exactly from the prompt. No spelling, punctuation, wording, or gender-form improvisation.
+7. CTA must express a benefit or relief from a pain point, never generic wording such as 'להכיר את המסכה'.

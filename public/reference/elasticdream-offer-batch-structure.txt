@@ -1,0 +1,5 @@
+Offer-static batch structure
+
+Five distinct offer-static concepts × three prompt variations each = 15 offer prompts total.
+
+Variation dimensions should change the presentation mechanism rather than silently changing the offer: bundle ladder, gift/value stack, savings emphasis, hero-tier emphasis, and native receipt/checkout-style value framing are examples. The underlying tier contents and arithmetic remain fixed.

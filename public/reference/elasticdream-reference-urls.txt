@@ -1,0 +1,6 @@
+REFERENCE URLS
+
+https://raw.githubusercontent.com/harelos/dopamodoro-app/elasticdream-assets/public/reference/elasticdream-product-reference.jpg
+https://raw.githubusercontent.com/harelos/dopamodoro-app/elasticdream-assets/public/reference/elasticdream-peel-reference.jpg
+https://raw.githubusercontent.com/harelos/dopamodoro-app/elasticdream-assets/public/reference/elasticdream-serum-reference.jpg
+https://raw.githubusercontent.com/harelos/dopamodoro-app/elasticdream-assets/public/reference/elasticdream-eye-balm-reference.jpg

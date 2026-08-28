@@ -1,0 +1,3 @@
+Hebrew rendering rule
+
+Every visible Hebrew string is supplied verbatim in each prompt. The image model must reproduce only those exact strings. Do not paraphrase, autocorrect, translate, add punctuation, remove punctuation, change grammatical gender, or invent extra microcopy. If exact Hebrew cannot be rendered, leave that text zone clean for later compositing rather than outputting misspelled Hebrew.

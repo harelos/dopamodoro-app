@@ -1,0 +1,10 @@
+Prompt QA checklist
+
+- Physical product matches reference, not campaign name.
+- Correct bundle quantities and gifts.
+- Eye balm only in highest tier.
+- Serum shown without box when the creative calls for bottle-only presentation.
+- Hebrew text is predetermined and exact.
+- CTA communicates benefit or pain relief.
+- People-led execution has natural imperfection.
+- 1080x1350 / 4:5 mobile-feed composition unless prompt explicitly overrides it.

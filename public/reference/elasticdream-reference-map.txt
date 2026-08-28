@@ -1,0 +1,9 @@
+Elastic Dream reference asset map
+
+Primary product fidelity reference: elasticdream-product-reference.jpg
+Mask peel/application reference: elasticdream-peel-reference.jpg
+Free serum reference: elasticdream-serum-reference.jpg
+Tier-3 eye balm reference: elasticdream-eye-balm-reference.jpg
+
+IMPORTANT FOR IMAGE PROMPTS:
+Never rename, redesign, relabel, or invent branding on the physical product. Treat reference imagery as visual truth. Brand/campaign naming may appear only in ad copy outside the product packaging when explicitly requested.
