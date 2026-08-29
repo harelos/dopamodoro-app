@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 3,
+  "syncRevision": 4,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -16,51 +16,31 @@
       "done": true,
       "priority": 1,
       "notes": ["Elastic Dream: gid://shopify/Product/9671746683175", "Oceaura: gid://shopify/Product/9566713905447", "NOVAHAIR: gid://shopify/Product/9882294354215", "Shopify analytics confirmed Elastic Dream #1 by orders and Oceaura #2 among named products."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-shopify",
-      "createdAt": "2026-08-29",
-      "completedAt": "2026-08-29",
-      "source": "chatgpt"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     },
     {
       "id": "ai-20260829-find-dopamodoro",
       "text": "Locate the Dopamodoro web/app repository and verify its task priority, groups and completed-history system",
-      "done": true,
-      "priority": 1,
+      "done": true, "priority": 1,
       "notes": ["Repository: harelos/dopamodoro-app", "Existing todo schema supports priority, notes, subtasks, dueDate, groupId and completedAt."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-dopamodoro",
-      "createdAt": "2026-08-29",
-      "completedAt": "2026-08-29",
-      "source": "chatgpt"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-dopamodoro", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     },
     {
       "id": "ai-20260829-cdp-architecture",
       "text": "Build the independent customer-data architecture so Shopify is a commerce system, not the only copy of customer data",
-      "done": false,
-      "priority": 1,
-      "notes": ["Target architecture: Shopify + Tally + Google Forms + legacy sources -> owned database -> selective sync back to Shopify.", "Do not store raw customer PII in Git history."],
+      "done": false, "priority": 1,
+      "notes": ["Target architecture: Shopify + Tally + Google Forms + legacy sources -> owned database -> selective sync back to Shopify.", "Canonical Postgres schema is now defined in customer-data/schema.sql and product identity mapping is in customer-data/product-map.json.", "Do not store raw customer PII in Git history."],
       "subtasks": [
-        { "id": "schema", "text": "Define canonical customer/order/source IDs", "done": false },
+        { "id": "schema", "text": "Define canonical customer/order/source IDs", "done": true },
         { "id": "backup", "text": "Define encrypted backup strategy independent of Shopify", "done": false },
         { "id": "sync", "text": "Define incremental sync and reconciliation jobs", "done": false }
       ],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-data",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt"
+      "goalId": null, "dueDate": null, "groupId": "ai-data", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
     },
     {
       "id": "ai-20260829-shopify-history-export",
       "text": "Prepare full Shopify customer + order export for the owned database",
-      "done": false,
-      "priority": 1,
+      "done": false, "priority": 1,
       "notes": ["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.", "This means old customer cohorts can be reconstructed directly from Shopify, not just analytics.", "Export target includes customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
       "subtasks": [
         { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": true },
@@ -68,102 +48,54 @@
         { "id": "orders", "text": "Export orders and line items", "done": false },
         { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / Oceaura / Nova purchase history", "done": false }
       ],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-shopify",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt"
+      "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
     },
     {
       "id": "ai-20260829-product-cross-sell-map",
       "text": "Map complementary products bought with Elastic Dream and identify cross-sell relationships from order history",
-      "done": false,
-      "priority": 2,
+      "done": false, "priority": 2,
       "notes": ["The 4-in-1 hyaluronic serum has a strong historical timing overlap with Elastic Dream sales. Exact co-purchase relationships still require an order-level line-item join."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-shopify",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
     },
     {
       "id": "ai-20260829-tally-source-verified",
       "text": "Verify the live Tally survey as a readable data source",
-      "done": true,
-      "priority": 1,
+      "done": true, "priority": 1,
       "notes": ["Published customer-experience form is readable through Tally and currently contains completed submission data."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-forms",
-      "createdAt": "2026-08-29",
-      "completedAt": "2026-08-29",
-      "source": "chatgpt"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     },
     {
       "id": "ai-20260829-tally-pipeline",
       "text": "Connect Tally submissions to the owned database and selectively enrich Shopify customer records",
-      "done": false,
-      "priority": 2,
+      "done": false, "priority": 2,
       "notes": ["Raw survey response stays in the owned database; only useful normalized attributes should be written back to Shopify tags/metafields."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-forms",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
     },
     {
       "id": "ai-20260829-google-forms-import",
       "text": "Import historical Google Forms responses into the customer-data model",
-      "done": false,
-      "priority": 2,
+      "done": false, "priority": 2,
       "notes": ["Waiting for the Google Forms/Sheets export or source to be provided."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-forms",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt",
-      "blockedBy": "user_source"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt", "blockedBy": "user_source"
     },
     {
       "id": "ai-20260829-clickfunnels-recovery",
       "text": "Recover the pre-Shopify ClickFunnels customer/order database and add it as another source",
-      "done": false,
-      "priority": 2,
+      "done": false, "priority": 2,
       "notes": ["Waiting for access to the old ClickFunnels database/export."],
-      "subtasks": [],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-legacy",
-      "createdAt": "2026-08-29",
-      "completedAt": null,
-      "source": "chatgpt",
-      "blockedBy": "user_source"
+      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-legacy", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt", "blockedBy": "user_source"
     },
     {
       "id": "ai-20260829-dopamodoro-sync",
       "text": "Make ChatGPT-managed tasks visible inside Dopamodoro and keep completion status synchronized from GitHub",
-      "done": true,
-      "priority": 1,
+      "done": true, "priority": 1,
       "notes": ["GitHub-backed ai-tasks.json feed and browser worklog are live.", "GitHub Actions successfully patched app.js so ChatGPT tasks merge into the existing task manager by stable ID without deleting or overwriting personal tasks.", "Sync is GitHub-to-Dopamodoro for ChatGPT-managed task status; offline mode retains the latest local copy."],
       "subtasks": [
         { "id": "feed", "text": "Create stable AI task feed", "done": true },
         { "id": "view", "text": "Create browser worklog view", "done": true },
         { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": true }
       ],
-      "goalId": null,
-      "dueDate": null,
-      "groupId": "ai-dopamodoro",
-      "createdAt": "2026-08-29",
-      "completedAt": "2026-08-29",
-      "source": "chatgpt"
+      "goalId": null, "dueDate": null, "groupId": "ai-dopamodoro", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     }
   ]
 }
