@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 6,
+  "syncRevision": 7,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -111,6 +111,25 @@
         { "id": "define-isolation-rules", "text": "Define fail-closed rules for future bot QA", "done": true }
       ],
       "goalId": null, "dueDate": null, "groupId": "ai-bot", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
+    },
+    {
+      "id": "ai-20260829-pause-tigera-color-page",
+      "text": "Pause the current TIGERA COLOR / NovaHair storefront page without deleting the TIGERA COLOR concept and preserve a safe restoration path",
+      "done": true,
+      "priority": 1,
+      "notes": [
+        "Immediate action completed: product gid://shopify/Product/9882294354215 was changed from ACTIVE to UNLISTED on 2026-08-29.",
+        "No product, variants, content, handle, TIGERA COLOR naming, or inventory were deleted; this was a visibility-only change.",
+        "Reason: the current storefront page/design is not ready to remain publicly listed.",
+        "If we restore it later: redesign and QA the page first, verify mobile layout, copy, offer and checkout path, then change the product from UNLISTED back to ACTIVE and verify live visibility and purchase flow.",
+        "Do not remove the TIGERA COLOR concept/name as part of this pause."
+      ],
+      "subtasks": [
+        { "id": "unlist", "text": "Set the current NovaHair/TIGERA COLOR storefront page to UNLISTED", "done": true },
+        { "id": "preserve", "text": "Preserve product, variants, content and TIGERA COLOR naming for future use", "done": true },
+        { "id": "restore-checklist", "text": "Document redesign, QA and ACTIVE re-enable steps if the page is restored later", "done": true }
+      ],
+      "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     }
   ]
 }
