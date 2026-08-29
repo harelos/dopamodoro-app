@@ -60,9 +60,9 @@
       "text": "Verify historical-order API access and prepare full Shopify customer + order export for the owned database",
       "done": false,
       "priority": 1,
-      "notes": ["Need to confirm access to orders older than Shopify's default API window and include customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
+      "notes": ["Historical Shopify analytics are available back through the Elastic Dream and OceAura selling periods. Next step is verifying order-level/customer-level access for the same old period before export.", "Export target includes customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
       "subtasks": [
-        { "id": "permission", "text": "Confirm all-order historical access", "done": false },
+        { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": false },
         { "id": "customers", "text": "Export canonical customer records", "done": false },
         { "id": "orders", "text": "Export orders and line items", "done": false },
         { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / OceAura / Nova purchase history", "done": false }
@@ -79,13 +79,27 @@
       "text": "Map complementary products bought with Elastic Dream and identify cross-sell relationships from order history",
       "done": false,
       "priority": 2,
-      "notes": ["Known historical complementary items include the 4-in-1 hyaluronic serum; additional names mentioned should be matched against exact Shopify titles before importing."],
+      "notes": ["The 4-in-1 hyaluronic serum has a strong historical timing overlap with Elastic Dream sales. Exact co-purchase relationships still require an order-level line-item join."],
       "subtasks": [],
       "goalId": null,
       "dueDate": null,
       "groupId": "ai-shopify",
       "createdAt": "2026-08-29",
       "completedAt": null,
+      "source": "chatgpt"
+    },
+    {
+      "id": "ai-20260829-tally-source-verified",
+      "text": "Verify the live Tally survey as a readable data source",
+      "done": true,
+      "priority": 1,
+      "notes": ["Published form verified: customer-experience survey is readable through Tally and currently contains completed submission data."],
+      "subtasks": [],
+      "goalId": null,
+      "dueDate": null,
+      "groupId": "ai-forms",
+      "createdAt": "2026-08-29",
+      "completedAt": "2026-08-29",
       "source": "chatgpt"
     },
     {
@@ -137,10 +151,10 @@
       "text": "Make ChatGPT-managed tasks visible inside Dopamodoro and keep completion status synchronized from GitHub",
       "done": false,
       "priority": 1,
-      "notes": ["Initial GitHub-backed task feed created. Main-app automatic merge/sync still needs to be wired into app.js."],
+      "notes": ["GitHub-backed task feed and dedicated browser worklog are created. A safe GitHub Actions installer now patches app.js to merge these stable ChatGPT task IDs into the existing local task manager while leaving personal tasks untouched."],
       "subtasks": [
         { "id": "feed", "text": "Create stable AI task feed", "done": true },
-        { "id": "view", "text": "Create browser worklog view", "done": false },
+        { "id": "view", "text": "Create browser worklog view", "done": true },
         { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": false }
       ],
       "goalId": null,
