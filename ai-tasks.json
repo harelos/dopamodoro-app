@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 8,
+  "syncRevision": 9,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -11,133 +11,19 @@
     { "id": "ai-bot", "name": "TIGER Bot & Staging", "collapsed": false, "createdAt": "2026-08-29" }
   ],
   "todos": [
-    {
-      "id": "ai-20260829-map-core-products",
-      "text": "Map Elastic Dream, Oceaura and NOVAHAIR to their exact Shopify products and verify historical sales ranking",
-      "done": true,
-      "priority": 1,
-      "notes": ["Elastic Dream: gid://shopify/Product/9671746683175", "Oceaura: gid://shopify/Product/9566713905447", "NOVAHAIR: gid://shopify/Product/9882294354215", "Shopify analytics confirmed Elastic Dream #1 by orders and Oceaura #2 among named products."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-find-dopamodoro",
-      "text": "Locate the Dopamodoro web/app repository and verify its task priority, groups and completed-history system",
-      "done": true, "priority": 1,
-      "notes": ["Repository: harelos/dopamodoro-app", "Existing todo schema supports priority, notes, subtasks, dueDate, groupId and completedAt."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-dopamodoro", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-cdp-architecture",
-      "text": "Build the independent customer-data architecture so Shopify is a commerce system, not the only copy of customer data",
-      "done": false, "priority": 1,
-      "notes": ["Target architecture: Shopify + Tally + Google Forms + legacy sources -> owned database -> selective sync back to Shopify.", "Canonical Postgres schema is now defined in customer-data/schema.sql and product identity mapping is in customer-data/product-map.json.", "Do not store raw customer PII in Git history."],
-      "subtasks": [
-        { "id": "schema", "text": "Define canonical customer/order/source IDs", "done": true },
-        { "id": "backup", "text": "Define encrypted backup strategy independent of Shopify", "done": false },
-        { "id": "sync", "text": "Define incremental sync and reconciliation jobs", "done": false }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-data", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-shopify-history-export",
-      "text": "Prepare full Shopify customer + order export for the owned database",
-      "done": false, "priority": 1,
-      "notes": ["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.", "Read-only Shopify Bulk exports completed on 2026-08-29: 3,562 customer records and 3,378 orders; order export contained 8,833 total objects including 5,455 line items.", "Both bulk operations completed with zero Shopify errors and exact root counts.", "No store records, theme code, checkout, products, inventory, customers or orders were modified.", "Shopify bulk download URLs are temporary; durable external storage/import into the owned database is still pending."],
-      "subtasks": [
-        { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": true },
-        { "id": "customers", "text": "Run canonical customer bulk export", "done": true },
-        { "id": "orders", "text": "Run orders and line-items bulk export", "done": true },
-        { "id": "archive", "text": "Persist exported files in durable encrypted storage / owned database", "done": false },
-        { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / Oceaura / Nova purchase history", "done": false }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-product-cross-sell-map",
-      "text": "Map complementary products bought with Elastic Dream and identify cross-sell relationships from order history",
-      "done": false, "priority": 2,
-      "notes": ["The 4-in-1 hyaluronic serum has a strong historical timing overlap with Elastic Dream sales. Exact co-purchase relationships still require an order-level line-item join."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-tally-source-verified",
-      "text": "Verify the live Tally survey as a readable data source",
-      "done": true, "priority": 1,
-      "notes": ["Published customer-experience form is readable through Tally and currently contains completed submission data."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-tally-pipeline",
-      "text": "Connect Tally submissions to the owned database and selectively enrich Shopify customer records",
-      "done": false, "priority": 2,
-      "notes": ["Raw survey response stays in the owned database; only useful normalized attributes should be written back to Shopify tags/metafields."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-google-forms-import",
-      "text": "Import historical Google Forms responses into the customer-data model",
-      "done": false, "priority": 2,
-      "notes": ["Waiting for the Google Forms/Sheets export or source to be provided."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-forms", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt", "blockedBy": "user_source"
-    },
-    {
-      "id": "ai-20260829-clickfunnels-recovery",
-      "text": "Recover the pre-Shopify ClickFunnels customer/order database and add it as another source",
-      "done": false, "priority": 2,
-      "notes": ["Waiting for access to the old ClickFunnels database/export."],
-      "subtasks": [], "goalId": null, "dueDate": null, "groupId": "ai-legacy", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt", "blockedBy": "user_source"
-    },
-    {
-      "id": "ai-20260829-dopamodoro-sync",
-      "text": "Make ChatGPT-managed tasks visible inside Dopamodoro and keep completion status synchronized from GitHub",
-      "done": true, "priority": 1,
-      "notes": ["GitHub-backed ai-tasks.json feed and browser worklog are live.", "GitHub Actions successfully patched app.js so ChatGPT tasks merge into the existing task manager by stable ID without deleting or overwriting personal tasks.", "Sync is GitHub-to-Dopamodoro for ChatGPT-managed task status; offline mode retains the latest local copy."],
-      "subtasks": [
-        { "id": "feed", "text": "Create stable AI task feed", "done": true },
-        { "id": "view", "text": "Create browser worklog view", "done": true },
-        { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": true }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-dopamodoro", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-audit-bot-staging-isolation",
-      "text": "Audit and verify the isolated Shopify/GitHub staging environment for the TIGER website bot without touching the live storefront",
-      "done": true, "priority": 1,
-      "notes": ["Verified the live MAIN theme is separate from the unpublished staging theme.", "Staging theme: TBG GitHub Staging, gid://shopify/OnlineStoreTheme/188167684391, role UNPUBLISHED.", "Live theme: Updated copy of Dawn, gid://shopify/OnlineStoreTheme/182172320039, role MAIN.", "Staging contains sections/tiger-bot-staging.liquid and templates/page.tiger-bot-staging.json.", "The staging section embeds the isolated Render bot test page and explicitly states STAGING ONLY / not connected to the live store.", "GitHub bot runtime remains storefrontEnabled=false. No Shopify theme write, publish, product, checkout, order, price, discount, or live storefront change was made during this audit."],
-      "subtasks": [
-        { "id": "verify-theme-role", "text": "Verify staging theme is UNPUBLISHED and distinct from MAIN", "done": true },
-        { "id": "verify-staging-template", "text": "Verify dedicated bot staging section/template exists only in staging theme", "done": true },
-        { "id": "verify-bot-runtime-guard", "text": "Verify bot runtime reports storefrontEnabled=false", "done": true },
-        { "id": "define-isolation-rules", "text": "Define fail-closed rules for future bot QA", "done": true }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-bot", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-pause-tigera-color-page",
-      "text": "Pause the current TIGERA COLOR / NovaHair storefront page without deleting the TIGERA COLOR concept and preserve a safe restoration path",
-      "done": true,
-      "priority": 1,
-      "notes": ["Immediate action completed: product gid://shopify/Product/9882294354215 was changed from ACTIVE to UNLISTED on 2026-08-29.", "No product, variants, content, handle, TIGERA COLOR naming, or inventory were deleted; this was a visibility-only change.", "Reason: the current storefront page/design is not ready to remain publicly listed.", "If we restore it later: redesign and QA the page first, verify mobile layout, copy, offer and checkout path, then change the product from UNLISTED back to ACTIVE and verify live visibility and purchase flow.", "Do not remove the TIGERA COLOR concept/name as part of this pause."],
-      "subtasks": [
-        { "id": "unlist", "text": "Set the current NovaHair/TIGERA COLOR storefront page to UNLISTED", "done": true },
-        { "id": "preserve", "text": "Preserve product, variants, content and TIGERA COLOR naming for future use", "done": true },
-        { "id": "restore-checklist", "text": "Document redesign, QA and ACTIVE re-enable steps if the page is restored later", "done": true }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    },
-    {
-      "id": "ai-20260829-replace-render-bot-staging",
-      "text": "Investigate the TIGER bot staging loading failure on Render and choose a better isolated hosting path",
-      "done": true,
-      "priority": 1,
-      "notes": ["Verified the current tiger-bot-staging Render service is on the free plan, which can sleep and cold-start; the screenshot behavior is consistent with the service waking rather than the bot UI itself loading immediately.", "The current app is Node/Express with Prisma using a local SQLite file (app/prisma/dev.db).", "Vercel is not a drop-in replacement for this exact backend because its serverless runtime does not provide durable local SQLite persistence; moving there safely would require a database/runtime refactor.", "Best low-friction replacement for the existing architecture: a persistent Node host such as Railway with a persistent volume, keeping the same isolated feature branch and storefrontEnabled=false.", "No live Shopify theme, product, checkout, price, discount or storefront code was changed during this investigation."],
-      "subtasks": [
-        { "id": "confirm-render-plan", "text": "Confirm whether current bot staging is on a sleeping/free Render plan", "done": true },
-        { "id": "inspect-runtime", "text": "Inspect backend runtime and database requirements", "done": true },
-        { "id": "evaluate-vercel", "text": "Evaluate whether Vercel is a safe drop-in host", "done": true },
-        { "id": "recommend-host", "text": "Choose the lowest-friction isolated replacement host", "done": true }
-      ],
-      "goalId": null, "dueDate": null, "groupId": "ai-bot", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
-    }
+    {"id":"ai-20260829-map-core-products","text":"Map Elastic Dream, Oceaura and NOVAHAIR to their exact Shopify products and verify historical sales ranking","done":true,"priority":1,"notes":["Elastic Dream: gid://shopify/Product/9671746683175","Oceaura: gid://shopify/Product/9566713905447","NOVAHAIR: gid://shopify/Product/9882294354215","Shopify analytics confirmed Elastic Dream #1 by orders and Oceaura #2 among named products."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-shopify","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-find-dopamodoro","text":"Locate the Dopamodoro web/app repository and verify its task priority, groups and completed-history system","done":true,"priority":1,"notes":["Repository: harelos/dopamodoro-app","Existing todo schema supports priority, notes, subtasks, dueDate, groupId and completedAt."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-dopamodoro","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-cdp-architecture","text":"Build the independent customer-data architecture so Shopify is a commerce system, not the only copy of customer data","done":false,"priority":1,"notes":["Target architecture: Shopify + Tally + Google Forms + legacy sources -> owned database -> selective sync back to Shopify.","Canonical Postgres schema is now defined in customer-data/schema.sql and product identity mapping is in customer-data/product-map.json.","Do not store raw customer PII in Git history."],"subtasks":[{"id":"schema","text":"Define canonical customer/order/source IDs","done":true},{"id":"backup","text":"Define encrypted backup strategy independent of Shopify","done":false},{"id":"sync","text":"Define incremental sync and reconciliation jobs","done":false}],"goalId":null,"dueDate":null,"groupId":"ai-data","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt"},
+    {"id":"ai-20260829-shopify-history-export","text":"Prepare full Shopify customer + order export for the owned database","done":false,"priority":1,"notes":["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.","Read-only Shopify Bulk exports completed on 2026-08-29: 3,562 customer records and 3,378 orders; order export contained 8,833 total objects including 5,455 line items.","Both bulk operations completed with zero Shopify errors and exact root counts.","No store records, theme code, checkout, products, inventory, customers or orders were modified.","Shopify bulk download URLs are temporary; durable external storage/import into the owned database is still pending."],"subtasks":[{"id":"permission","text":"Confirm all-order historical order/customer access","done":true},{"id":"customers","text":"Run canonical customer bulk export","done":true},{"id":"orders","text":"Run orders and line-items bulk export","done":true},{"id":"archive","text":"Persist exported files in durable encrypted storage / owned database","done":false},{"id":"cohorts","text":"Label customer cohorts by Elastic Dream / Oceaura / Nova purchase history","done":false}],"goalId":null,"dueDate":null,"groupId":"ai-shopify","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt"},
+    {"id":"ai-20260829-product-cross-sell-map","text":"Map complementary products bought with Elastic Dream and identify cross-sell relationships from order history","done":false,"priority":2,"notes":["The 4-in-1 hyaluronic serum has a strong historical timing overlap with Elastic Dream sales. Exact co-purchase relationships still require an order-level line-item join."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-shopify","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt"},
+    {"id":"ai-20260829-tally-source-verified","text":"Verify the live Tally survey as a readable data source","done":true,"priority":1,"notes":["Published customer-experience form is readable through Tally and currently contains completed submission data."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-forms","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-tally-pipeline","text":"Connect Tally submissions to the owned database and selectively enrich Shopify customer records","done":false,"priority":2,"notes":["Raw survey response stays in the owned database; only useful normalized attributes should be written back to Shopify tags/metafields."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-forms","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt"},
+    {"id":"ai-20260829-google-forms-import","text":"Import historical Google Forms responses into the customer-data model","done":false,"priority":2,"notes":["Waiting for the Google Forms/Sheets export or source to be provided."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-forms","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt","blockedBy":"user_source"},
+    {"id":"ai-20260829-clickfunnels-recovery","text":"Recover the pre-Shopify ClickFunnels customer/order database and add it as another source","done":false,"priority":2,"notes":["Waiting for access to the old ClickFunnels database/export."],"subtasks":[],"goalId":null,"dueDate":null,"groupId":"ai-legacy","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt","blockedBy":"user_source"},
+    {"id":"ai-20260829-dopamodoro-sync","text":"Make ChatGPT-managed tasks visible inside Dopamodoro and keep completion status synchronized from GitHub","done":true,"priority":1,"notes":["GitHub-backed ai-tasks.json feed and browser worklog are live.","GitHub Actions successfully patched app.js so ChatGPT tasks merge into the existing task manager by stable ID without deleting or overwriting personal tasks.","Sync is GitHub-to-Dopamodoro for ChatGPT-managed task status; offline mode retains the latest local copy."],"subtasks":[{"id":"feed","text":"Create stable AI task feed","done":true},{"id":"view","text":"Create browser worklog view","done":true},{"id":"merge","text":"Merge AI tasks into existing local task manager without overwriting personal tasks","done":true}],"goalId":null,"dueDate":null,"groupId":"ai-dopamodoro","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-audit-bot-staging-isolation","text":"Audit and verify the isolated Shopify/GitHub staging environment for the TIGER website bot without touching the live storefront","done":true,"priority":1,"notes":["Verified the live MAIN theme is separate from the unpublished staging theme.","Staging theme: TBG GitHub Staging, gid://shopify/OnlineStoreTheme/188167684391, role UNPUBLISHED.","Live theme: Updated copy of Dawn, gid://shopify/OnlineStoreTheme/182172320039, role MAIN.","Staging contains sections/tiger-bot-staging.liquid and templates/page.tiger-bot-staging.json.","The staging section embeds the isolated Render bot test page and explicitly states STAGING ONLY / not connected to the live store.","GitHub bot runtime remains storefrontEnabled=false. No Shopify theme write, publish, product, checkout, order, price, discount, or live storefront change was made during this audit."],"subtasks":[{"id":"verify-theme-role","text":"Verify staging theme is UNPUBLISHED and distinct from MAIN","done":true},{"id":"verify-staging-template","text":"Verify dedicated bot staging section/template exists only in staging theme","done":true},{"id":"verify-bot-runtime-guard","text":"Verify bot runtime reports storefrontEnabled=false","done":true},{"id":"define-isolation-rules","text":"Define fail-closed rules for future bot QA","done":true}],"goalId":null,"dueDate":null,"groupId":"ai-bot","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-pause-tigera-color-page","text":"Pause the current TIGERA COLOR / NovaHair storefront page without deleting the TIGERA COLOR concept and preserve a safe restoration path","done":true,"priority":1,"notes":["Immediate action completed: product gid://shopify/Product/9882294354215 was changed from ACTIVE to UNLISTED on 2026-08-29.","No product, variants, content, handle, TIGERA COLOR naming, or inventory were deleted; this was a visibility-only change.","Reason: the current storefront page/design is not ready to remain publicly listed.","If we restore it later: redesign and QA the page first, verify mobile layout, copy, offer and checkout path, then change the product from UNLISTED back to ACTIVE and verify live visibility and purchase flow.","Do not remove the TIGERA COLOR concept/name as part of this pause."],"subtasks":[{"id":"unlist","text":"Set the current NovaHair/TIGERA COLOR storefront page to UNLISTED","done":true},{"id":"preserve","text":"Preserve product, variants, content and TIGERA COLOR naming for future use","done":true},{"id":"restore-checklist","text":"Document redesign, QA and ACTIVE re-enable steps if the page is restored later","done":true}],"goalId":null,"dueDate":null,"groupId":"ai-shopify","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-replace-render-bot-staging","text":"Investigate the TIGER bot staging loading failure on Render and choose a better isolated hosting path","done":true,"priority":1,"notes":["Verified the current tiger-bot-staging Render service is on the free plan, which can sleep and cold-start; the screenshot behavior is consistent with the service waking rather than the bot UI itself loading immediately.","The current app is Node/Express with Prisma using a local SQLite file (app/prisma/dev.db).","Vercel is not a drop-in replacement for this exact backend because its serverless runtime does not provide durable local SQLite persistence; moving there safely would require a database/runtime refactor.","Best low-friction replacement for the existing architecture: a persistent Node host such as Railway with a persistent volume, keeping the same isolated feature branch and storefrontEnabled=false.","No live Shopify theme, product, checkout, price, discount or storefront code was changed during this investigation."],"subtasks":[{"id":"confirm-render-plan","text":"Confirm whether current bot staging is on a sleeping/free Render plan","done":true},{"id":"inspect-runtime","text":"Inspect backend runtime and database requirements","done":true},{"id":"evaluate-vercel","text":"Evaluate whether Vercel is a safe drop-in host","done":true},{"id":"recommend-host","text":"Choose the lowest-friction isolated replacement host","done":true}],"goalId":null,"dueDate":null,"groupId":"ai-bot","createdAt":"2026-08-29","completedAt":"2026-08-29","source":"chatgpt"},
+    {"id":"ai-20260829-public-bot-qa-rollout","text":"Build and validate a public, isolated TIGER Bot QA environment that can read approved store data without being able to modify the live Shopify storefront","done":false,"priority":1,"notes":["Phase 1 completed on 2026-08-29: audited server auth and bot tool execution boundaries and added a fail-closed BOT_PUBLIC_QA_MODE guard on the feature branch.","In BOT_PUBLIC_QA_MODE only explicitly read-only bot tools are allowed; offer/cart/resolution/risk/human-escalation style tools are blocked before execution.","No MAIN Shopify theme or live storefront code was changed."],"subtasks":[{"id":"phase1-safety-boundary","text":"Phase 1: Add fail-closed public QA read-only server boundary and tests","done":true},{"id":"phase2-public-endpoint","text":"Phase 2: Create isolated authenticated public QA endpoint that does not require Shopify Admin login","done":false},{"id":"phase3-data-read","text":"Phase 3: Connect authoritative read-only store data needed for real answers","done":false},{"id":"phase4-public-ui","text":"Phase 4: Publish isolated public QA chat page outside the live Shopify theme","done":false},{"id":"phase5-e2e-qa","text":"Phase 5: Run end-to-end QA on real questions, mobile behavior, data accuracy and write-block guarantees","done":false}],"goalId":null,"dueDate":null,"groupId":"ai-bot","createdAt":"2026-08-29","completedAt":null,"source":"chatgpt"}
   ]
 }
