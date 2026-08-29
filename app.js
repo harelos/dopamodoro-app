@@ -102,6 +102,50 @@ let state = {
   isPremium: false
 };
 
+// ==================== AI TASK SYNC ====================
+// ChatGPT-managed tasks live in ai-tasks.json. They are merged by stable ID
+// into the existing task manager, while personal/local tasks remain untouched.
+async function syncAssistantTasks() {
+  try {
+    const res = await fetch('./ai-tasks.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('ai-tasks HTTP ' + res.status);
+    const remote = await res.json();
+
+    state.todoGroups = Array.isArray(state.todoGroups) ? state.todoGroups : [];
+    state.todos = Array.isArray(state.todos) ? state.todos : [];
+
+    (remote.groups || []).forEach(rg => {
+      const i = state.todoGroups.findIndex(g => g.id === rg.id);
+      const clean = { ...rg, source: 'chatgpt' };
+      if (i >= 0) state.todoGroups[i] = { ...state.todoGroups[i], ...clean };
+      else state.todoGroups.push(clean);
+    });
+
+    (remote.todos || []).forEach(rt => {
+      const i = state.todos.findIndex(t => t.id === rt.id);
+      const clean = {
+        ...rt,
+        source: 'chatgpt',
+        notes: Array.isArray(rt.notes) ? rt.notes : [],
+        subtasks: Array.isArray(rt.subtasks) ? rt.subtasks : [],
+        priority: typeof rt.priority === 'number' ? rt.priority : 3,
+        completedAt: rt.completedAt || null,
+        dueDate: rt.dueDate || null,
+        groupId: rt.groupId || null
+      };
+      // Remote file is authoritative only for stable ChatGPT task IDs.
+      // This never edits or deletes personal tasks created in the app.
+      if (i >= 0) state.todos[i] = { ...state.todos[i], ...clean };
+      else state.todos.push(clean);
+    });
+
+    await storageSet(state);
+  } catch (e) {
+    // Offline use stays fully functional with the last local copy.
+    console.warn('AI task sync:', e);
+  }
+}
+
 // ==================== LEVEL TITLES ====================
 const LEVEL_TITLES = [
   { min: 1,  name: 'Sprout',             icon: '🌱' },
@@ -162,6 +206,9 @@ async function loadState() {
     if (!state.dailySummaries || typeof state.dailySummaries !== 'object') state.dailySummaries = {};
     if (!Array.isArray(state.reminders)) state.reminders = [];
   }
+
+  // Pull ChatGPT-managed tasks before rendering local state.
+  await syncAssistantTasks();
 
   // If a timer was running when app last closed, recompute time-left
   if (state.isRunning && state.sessionStartTime) {
