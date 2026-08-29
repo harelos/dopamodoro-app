@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "syncRevision": 2,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
