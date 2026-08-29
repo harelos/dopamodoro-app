@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 7,
+  "syncRevision": 8,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -117,19 +117,27 @@
       "text": "Pause the current TIGERA COLOR / NovaHair storefront page without deleting the TIGERA COLOR concept and preserve a safe restoration path",
       "done": true,
       "priority": 1,
-      "notes": [
-        "Immediate action completed: product gid://shopify/Product/9882294354215 was changed from ACTIVE to UNLISTED on 2026-08-29.",
-        "No product, variants, content, handle, TIGERA COLOR naming, or inventory were deleted; this was a visibility-only change.",
-        "Reason: the current storefront page/design is not ready to remain publicly listed.",
-        "If we restore it later: redesign and QA the page first, verify mobile layout, copy, offer and checkout path, then change the product from UNLISTED back to ACTIVE and verify live visibility and purchase flow.",
-        "Do not remove the TIGERA COLOR concept/name as part of this pause."
-      ],
+      "notes": ["Immediate action completed: product gid://shopify/Product/9882294354215 was changed from ACTIVE to UNLISTED on 2026-08-29.", "No product, variants, content, handle, TIGERA COLOR naming, or inventory were deleted; this was a visibility-only change.", "Reason: the current storefront page/design is not ready to remain publicly listed.", "If we restore it later: redesign and QA the page first, verify mobile layout, copy, offer and checkout path, then change the product from UNLISTED back to ACTIVE and verify live visibility and purchase flow.", "Do not remove the TIGERA COLOR concept/name as part of this pause."],
       "subtasks": [
         { "id": "unlist", "text": "Set the current NovaHair/TIGERA COLOR storefront page to UNLISTED", "done": true },
         { "id": "preserve", "text": "Preserve product, variants, content and TIGERA COLOR naming for future use", "done": true },
         { "id": "restore-checklist", "text": "Document redesign, QA and ACTIVE re-enable steps if the page is restored later", "done": true }
       ],
       "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
+    },
+    {
+      "id": "ai-20260829-replace-render-bot-staging",
+      "text": "Investigate the TIGER bot staging loading failure on Render and choose a better isolated hosting path",
+      "done": true,
+      "priority": 1,
+      "notes": ["Verified the current tiger-bot-staging Render service is on the free plan, which can sleep and cold-start; the screenshot behavior is consistent with the service waking rather than the bot UI itself loading immediately.", "The current app is Node/Express with Prisma using a local SQLite file (app/prisma/dev.db).", "Vercel is not a drop-in replacement for this exact backend because its serverless runtime does not provide durable local SQLite persistence; moving there safely would require a database/runtime refactor.", "Best low-friction replacement for the existing architecture: a persistent Node host such as Railway with a persistent volume, keeping the same isolated feature branch and storefrontEnabled=false.", "No live Shopify theme, product, checkout, price, discount or storefront code was changed during this investigation."],
+      "subtasks": [
+        { "id": "confirm-render-plan", "text": "Confirm whether current bot staging is on a sleeping/free Render plan", "done": true },
+        { "id": "inspect-runtime", "text": "Inspect backend runtime and database requirements", "done": true },
+        { "id": "evaluate-vercel", "text": "Evaluate whether Vercel is a safe drop-in host", "done": true },
+        { "id": "recommend-host", "text": "Choose the lowest-friction isolated replacement host", "done": true }
+      ],
+      "goalId": null, "dueDate": null, "groupId": "ai-bot", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     }
   ]
 }
