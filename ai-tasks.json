@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 4,
+  "syncRevision": 5,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -41,11 +41,12 @@
       "id": "ai-20260829-shopify-history-export",
       "text": "Prepare full Shopify customer + order export for the owned database",
       "done": false, "priority": 1,
-      "notes": ["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.", "This means old customer cohorts can be reconstructed directly from Shopify, not just analytics.", "Export target includes customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
+      "notes": ["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.", "Read-only Shopify Bulk exports completed on 2026-08-29: 3,562 customer records and 3,378 orders; order export contained 8,833 total objects including 5,455 line items.", "Both bulk operations completed with zero Shopify errors and exact root counts.", "No store records, theme code, checkout, products, inventory, customers or orders were modified.", "Shopify bulk download URLs are temporary; durable external storage/import into the owned database is still pending."],
       "subtasks": [
         { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": true },
-        { "id": "customers", "text": "Export canonical customer records", "done": false },
-        { "id": "orders", "text": "Export orders and line items", "done": false },
+        { "id": "customers", "text": "Run canonical customer bulk export", "done": true },
+        { "id": "orders", "text": "Run orders and line-items bulk export", "done": true },
+        { "id": "archive", "text": "Persist exported files in durable encrypted storage / owned database", "done": false },
         { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / Oceaura / Nova purchase history", "done": false }
       ],
       "goalId": null, "dueDate": null, "groupId": "ai-shopify", "createdAt": "2026-08-29", "completedAt": null, "source": "chatgpt"
