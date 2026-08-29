@@ -1,13 +1,14 @@
 {
   "version": 1,
-  "syncRevision": 5,
+  "syncRevision": 6,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
     { "id": "ai-shopify", "name": "Shopify Data", "collapsed": false, "createdAt": "2026-08-29" },
     { "id": "ai-forms", "name": "Forms & Surveys", "collapsed": false, "createdAt": "2026-08-29" },
     { "id": "ai-dopamodoro", "name": "Dopamodoro / Work Tracking", "collapsed": false, "createdAt": "2026-08-29" },
-    { "id": "ai-legacy", "name": "Legacy Data Recovery", "collapsed": false, "createdAt": "2026-08-29" }
+    { "id": "ai-legacy", "name": "Legacy Data Recovery", "collapsed": false, "createdAt": "2026-08-29" },
+    { "id": "ai-bot", "name": "TIGER Bot & Staging", "collapsed": false, "createdAt": "2026-08-29" }
   ],
   "todos": [
     {
@@ -97,6 +98,19 @@
         { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": true }
       ],
       "goalId": null, "dueDate": null, "groupId": "ai-dopamodoro", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
+    },
+    {
+      "id": "ai-20260829-audit-bot-staging-isolation",
+      "text": "Audit and verify the isolated Shopify/GitHub staging environment for the TIGER website bot without touching the live storefront",
+      "done": true, "priority": 1,
+      "notes": ["Verified the live MAIN theme is separate from the unpublished staging theme.", "Staging theme: TBG GitHub Staging, gid://shopify/OnlineStoreTheme/188167684391, role UNPUBLISHED.", "Live theme: Updated copy of Dawn, gid://shopify/OnlineStoreTheme/182172320039, role MAIN.", "Staging contains sections/tiger-bot-staging.liquid and templates/page.tiger-bot-staging.json.", "The staging section embeds the isolated Render bot test page and explicitly states STAGING ONLY / not connected to the live store.", "GitHub bot runtime remains storefrontEnabled=false. No Shopify theme write, publish, product, checkout, order, price, discount, or live storefront change was made during this audit."],
+      "subtasks": [
+        { "id": "verify-theme-role", "text": "Verify staging theme is UNPUBLISHED and distinct from MAIN", "done": true },
+        { "id": "verify-staging-template", "text": "Verify dedicated bot staging section/template exists only in staging theme", "done": true },
+        { "id": "verify-bot-runtime-guard", "text": "Verify bot runtime reports storefrontEnabled=false", "done": true },
+        { "id": "define-isolation-rules", "text": "Define fail-closed rules for future bot QA", "done": true }
+      ],
+      "goalId": null, "dueDate": null, "groupId": "ai-bot", "createdAt": "2026-08-29", "completedAt": "2026-08-29", "source": "chatgpt"
     }
   ]
 }
