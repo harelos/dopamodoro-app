@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-29",
+  "products": [
+    {
+      "canonicalName": "Elastic Dream",
+      "productFamily": "collagen-mask",
+      "shopify": {
+        "productId": "gid://shopify/Product/9671746683175",
+        "title": "מסיכת קולגן לילה אלסטיק-דרים",
+        "knownHistoricalLineItemTitle": "מסיכת קולגן לילה - ElasticDream",
+        "skus": ["CJMJ209113202BY"]
+      },
+      "aliases": ["ElasticDream", "Elastic Dream", "אלסטיק-דרים"]
+    },
+    {
+      "canonicalName": "Oceaura",
+      "productFamily": "hair-growth-shampoo",
+      "shopify": {
+        "productId": "gid://shopify/Product/9566713905447",
+        "title": "שמפו אמלה טבעי לצמיחה וחיזוק השיער",
+        "vendor": "OceAura",
+        "skus": ["CJST202283801AZ", "15415", "21551"]
+      },
+      "aliases": ["Oceaura", "OceAura", "O'Shea Aura"]
+    },
+    {
+      "canonicalName": "NOVAHAIR",
+      "productFamily": "hair-dye",
+      "shopify": {
+        "productId": "gid://shopify/Product/9882294354215",
+        "title": "NOVAHAIR — ערכת צביעה ביתית לשיער"
+      },
+      "aliases": ["Nova", "NOVA", "NOVAHAIR", "NovaHair"]
+    },
+    {
+      "canonicalName": "Mooyam 4-in-1 Hyaluronic Serum",
+      "productFamily": "elastic-dream-complementary",
+      "shopify": {
+        "title": "סרום חומצה היאלורונית 4 ב-1 מרוכז — Mooyam"
+      },
+      "aliases": ["4 in 1", "Four in One", "4-in-1 serum"]
+    }
+  ],
+  "notes": [
+    "Canonical names are independent from storefront titles so historical product-title changes do not split customer cohorts.",
+    "Do not add customer PII to this file.",
+    "Additional complementary products should be mapped only after their exact historical Shopify product/line-item identity is verified."
+  ]
+}
