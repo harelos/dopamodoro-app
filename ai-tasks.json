@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "syncRevision": 2,
+  "syncRevision": 3,
   "updatedAt": "2026-08-29",
   "groups": [
     { "id": "ai-data", "name": "Customer Data & CRM", "collapsed": false, "createdAt": "2026-08-29" },
@@ -12,10 +12,10 @@
   "todos": [
     {
       "id": "ai-20260829-map-core-products",
-      "text": "Map Elastic Dream, OceAura and NOVAHAIR to their exact Shopify products and verify historical sales ranking",
+      "text": "Map Elastic Dream, Oceaura and NOVAHAIR to their exact Shopify products and verify historical sales ranking",
       "done": true,
       "priority": 1,
-      "notes": ["Elastic Dream: gid://shopify/Product/9671746683175", "OceAura: gid://shopify/Product/9566713905447", "NOVAHAIR: gid://shopify/Product/9882294354215", "Shopify analytics confirmed Elastic Dream #1 by orders and OceAura #2 among named products."],
+      "notes": ["Elastic Dream: gid://shopify/Product/9671746683175", "Oceaura: gid://shopify/Product/9566713905447", "NOVAHAIR: gid://shopify/Product/9882294354215", "Shopify analytics confirmed Elastic Dream #1 by orders and Oceaura #2 among named products."],
       "subtasks": [],
       "goalId": null,
       "dueDate": null,
@@ -58,15 +58,15 @@
     },
     {
       "id": "ai-20260829-shopify-history-export",
-      "text": "Verify historical-order API access and prepare full Shopify customer + order export for the owned database",
+      "text": "Prepare full Shopify customer + order export for the owned database",
       "done": false,
       "priority": 1,
-      "notes": ["Historical Shopify analytics are available back through the Elastic Dream and OceAura selling periods. Next step is verifying order-level/customer-level access for the same old period before export.", "Export target includes customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
+      "notes": ["Historical order-level access is confirmed: January 2025 Elastic Dream orders can be read with customer IDs, line-item IDs, quantity, SKU and product ID.", "This means old customer cohorts can be reconstructed directly from Shopify, not just analytics.", "Export target includes customers, orders, line items, discounts, refunds, fulfillment, consent, tags and relevant metafields."],
       "subtasks": [
-        { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": false },
+        { "id": "permission", "text": "Confirm all-order historical order/customer access", "done": true },
         { "id": "customers", "text": "Export canonical customer records", "done": false },
         { "id": "orders", "text": "Export orders and line items", "done": false },
-        { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / OceAura / Nova purchase history", "done": false }
+        { "id": "cohorts", "text": "Label customer cohorts by Elastic Dream / Oceaura / Nova purchase history", "done": false }
       ],
       "goalId": null,
       "dueDate": null,
@@ -94,7 +94,7 @@
       "text": "Verify the live Tally survey as a readable data source",
       "done": true,
       "priority": 1,
-      "notes": ["Published form verified: customer-experience survey is readable through Tally and currently contains completed submission data."],
+      "notes": ["Published customer-experience form is readable through Tally and currently contains completed submission data."],
       "subtasks": [],
       "goalId": null,
       "dueDate": null,
@@ -150,19 +150,19 @@
     {
       "id": "ai-20260829-dopamodoro-sync",
       "text": "Make ChatGPT-managed tasks visible inside Dopamodoro and keep completion status synchronized from GitHub",
-      "done": false,
+      "done": true,
       "priority": 1,
-      "notes": ["GitHub-backed task feed and dedicated browser worklog are created. A safe GitHub Actions installer now patches app.js to merge these stable ChatGPT task IDs into the existing local task manager while leaving personal tasks untouched."],
+      "notes": ["GitHub-backed ai-tasks.json feed and browser worklog are live.", "GitHub Actions successfully patched app.js so ChatGPT tasks merge into the existing task manager by stable ID without deleting or overwriting personal tasks.", "Sync is GitHub-to-Dopamodoro for ChatGPT-managed task status; offline mode retains the latest local copy."],
       "subtasks": [
         { "id": "feed", "text": "Create stable AI task feed", "done": true },
         { "id": "view", "text": "Create browser worklog view", "done": true },
-        { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": false }
+        { "id": "merge", "text": "Merge AI tasks into existing local task manager without overwriting personal tasks", "done": true }
       ],
       "goalId": null,
       "dueDate": null,
       "groupId": "ai-dopamodoro",
       "createdAt": "2026-08-29",
-      "completedAt": null,
+      "completedAt": "2026-08-29",
       "source": "chatgpt"
     }
   ]
