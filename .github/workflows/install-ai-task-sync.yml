@@ -1,0 +1,100 @@
+name: Install AI task sync
+
+on:
+  push:
+    paths:
+      - 'ai-tasks.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch Dopamodoro task manager
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('app.js')
+          s = p.read_text(encoding='utf-8')
+          marker = '// ==================== AI TASK SYNC ===================='
+          if marker in s:
+              print('AI task sync already installed')
+              raise SystemExit(0)
+
+          sync_code = r'''
+// ==================== AI TASK SYNC ====================
+// ChatGPT-managed tasks live in ai-tasks.json. They are merged by stable ID
+// into the existing task manager, while personal/local tasks remain untouched.
+async function syncAssistantTasks() {
+  try {
+    const res = await fetch('./ai-tasks.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('ai-tasks HTTP ' + res.status);
+    const remote = await res.json();
+
+    state.todoGroups = Array.isArray(state.todoGroups) ? state.todoGroups : [];
+    state.todos = Array.isArray(state.todos) ? state.todos : [];
+
+    (remote.groups || []).forEach(rg => {
+      const i = state.todoGroups.findIndex(g => g.id === rg.id);
+      const clean = { ...rg, source: 'chatgpt' };
+      if (i >= 0) state.todoGroups[i] = { ...state.todoGroups[i], ...clean };
+      else state.todoGroups.push(clean);
+    });
+
+    (remote.todos || []).forEach(rt => {
+      const i = state.todos.findIndex(t => t.id === rt.id);
+      const clean = {
+        ...rt,
+        source: 'chatgpt',
+        notes: Array.isArray(rt.notes) ? rt.notes : [],
+        subtasks: Array.isArray(rt.subtasks) ? rt.subtasks : [],
+        priority: typeof rt.priority === 'number' ? rt.priority : 3,
+        completedAt: rt.completedAt || null,
+        dueDate: rt.dueDate || null,
+        groupId: rt.groupId || null
+      };
+      // Remote file is authoritative only for stable ChatGPT task IDs.
+      // This never edits or deletes personal tasks created in the app.
+      if (i >= 0) state.todos[i] = { ...state.todos[i], ...clean };
+      else state.todos.push(clean);
+    });
+
+    await storageSet(state);
+  } catch (e) {
+    // Offline use stays fully functional with the last local copy.
+    console.warn('AI task sync:', e);
+  }
+}
+
+'''
+
+          anchor = '// ==================== LEVEL TITLES ===================='
+          if anchor not in s:
+              raise SystemExit('Could not find insertion anchor for sync function')
+          s = s.replace(anchor, sync_code + anchor, 1)
+
+          load_anchor = "  // If a timer was running when app last closed, recompute time-left"
+          if load_anchor not in s:
+              raise SystemExit('Could not find loadState insertion anchor')
+          s = s.replace(load_anchor, "  // Pull ChatGPT-managed tasks before rendering local state.\n  await syncAssistantTasks();\n\n" + load_anchor, 1)
+
+          p.write_text(s, encoding='utf-8')
+          print('Installed AI task sync')
+          PY
+
+      - name: Commit patch if needed
+        run: |
+          if git diff --quiet -- app.js; then
+            echo "No app.js changes needed"
+            exit 0
+          fi
+          git config user.name "dopamodoro-ai-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add app.js
+          git commit -m "Wire ChatGPT task feed into Dopamodoro"
+          git push
