@@ -3,7 +3,7 @@ name: Install AI task sync
 on:
   push:
     paths:
-      - 'ai-tasks.json'
+      - ai-tasks.json
   workflow_dispatch:
 
 permissions:
@@ -15,8 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Patch Dopamodoro task manager
+        env:
+          SYNC_CODE_B64: Ly8gPT09PT09PT09PT09PT09PT09PT0gQUkgVEFTSyBTWU5DID09PT09PT09PT09PT09PT09PT09Ci8vIENoYXRHUFQtbWFuYWdlZCB0YXNrcyBsaXZlIGluIGFpLXRhc2tzLmpzb24uIFRoZXkgYXJlIG1lcmdlZCBieSBzdGFibGUgSUQKLy8gaW50byB0aGUgZXhpc3RpbmcgdGFzayBtYW5hZ2VyLCB3aGlsZSBwZXJzb25hbC9sb2NhbCB0YXNrcyByZW1haW4gdW50b3VjaGVkLgphc3luYyBmdW5jdGlvbiBzeW5jQXNzaXN0YW50VGFza3MoKSB7CiAgdHJ5IHsKICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKCcuL2FpLXRhc2tzLmpzb24/dHM9JyArIERhdGUubm93KCksIHsgY2FjaGU6ICduby1zdG9yZScgfSk7CiAgICBpZiAoIXJlcy5vaykgdGhyb3cgbmV3IEVycm9yKCdhaS10YXNrcyBIVFRQICcgKyByZXMuc3RhdHVzKTsKICAgIGNvbnN0IHJlbW90ZSA9IGF3YWl0IHJlcy5qc29uKCk7CgogICAgc3RhdGUudG9kb0dyb3VwcyA9IEFycmF5LmlzQXJyYXkoc3RhdGUudG9kb0dyb3VwcykgPyBzdGF0ZS50b2RvR3JvdXBzIDogW107CiAgICBzdGF0ZS50b2RvcyA9IEFycmF5LmlzQXJyYXkoc3RhdGUudG9kb3MpID8gc3RhdGUudG9kb3MgOiBbXTsKCiAgICAocmVtb3RlLmdyb3VwcyB8fCBbXSkuZm9yRWFjaChyZyA9PiB7CiAgICAgIGNvbnN0IGkgPSBzdGF0ZS50b2RvR3JvdXBzLmZpbmRJbmRleChnID0+IGcuaWQgPT09IHJnLmlkKTsKICAgICAgY29uc3QgY2xlYW4gPSB7IC4uLnJnLCBzb3VyY2U6ICdjaGF0Z3B0JyB9OwogICAgICBpZiAoaSA+PSAwKSBzdGF0ZS50b2RvR3JvdXBzW2ldID0geyAuLi5zdGF0ZS50b2RvR3JvdXBzW2ldLCAuLi5jbGVhbiB9OwogICAgICBlbHNlIHN0YXRlLnRvZG9Hcm91cHMucHVzaChjbGVhbik7CiAgICB9KTsKCiAgICAocmVtb3RlLnRvZG9zIHx8IFtdKS5mb3JFYWNoKHJ0ID0+IHsKICAgICAgY29uc3QgaSA9IHN0YXRlLnRvZG9zLmZpbmRJbmRleCh0ID0+IHQuaWQgPT09IHJ0LmlkKTsKICAgICAgY29uc3QgY2xlYW4gPSB7CiAgICAgICAgLi4ucnQsCiAgICAgICAgc291cmNlOiAnY2hhdGdwdCcsCiAgICAgICAgbm90ZXM6IEFycmF5LmlzQXJyYXkocnQubm90ZXMpID8gcnQubm90ZXMgOiBbXSwKICAgICAgICBzdWJ0YXNrczogQXJyYXkuaXNBcnJheShydC5zdWJ0YXNrcykgPyBydC5zdWJ0YXNrcyA6IFtdLAogICAgICAgIHByaW9yaXR5OiB0eXBlb2YgcnQucHJpb3JpdHkgPT09ICdudW1iZXInID8gcnQucHJpb3JpdHkgOiAzLAogICAgICAgIGNvbXBsZXRlZEF0OiBydC5jb21wbGV0ZWRBdCB8fCBudWxsLAogICAgICAgIGR1ZURhdGU6IHJ0LmR1ZURhdGUgfHwgbnVsbCwKICAgICAgICBncm91cElkOiBydC5ncm91cElkIHx8IG51bGwKICAgICAgfTsKICAgICAgLy8gUmVtb3RlIGZpbGUgaXMgYXV0aG9yaXRhdGl2ZSBvbmx5IGZvciBzdGFibGUgQ2hhdEdQVCB0YXNrIElEcy4KICAgICAgLy8gVGhpcyBuZXZlciBlZGl0cyBvciBkZWxldGVzIHBlcnNvbmFsIHRhc2tzIGNyZWF0ZWQgaW4gdGhlIGFwcC4KICAgICAgaWYgKGkgPj0gMCkgc3RhdGUudG9kb3NbaV0gPSB7IC4uLnN0YXRlLnRvZG9zW2ldLCAuLi5jbGVhbiB9OwogICAgICBlbHNlIHN0YXRlLnRvZG9zLnB1c2goY2xlYW4pOwogICAgfSk7CgogICAgYXdhaXQgc3RvcmFnZVNldChzdGF0ZSk7CiAgfSBjYXRjaCAoZSkgewogICAgLy8gT2ZmbGluZSB1c2Ugc3RheXMgZnVsbHkgZnVuY3Rpb25hbCB3aXRoIHRoZSBsYXN0IGxvY2FsIGNvcHkuCiAgICBjb25zb2xlLndhcm4oJ0FJIHRhc2sgc3luYzonLCBlKTsKICB9Cn0KCg==
         run: |
           python - <<'PY'
+          import base64
+          import os
           from pathlib import Path
 
           p = Path('app.js')
@@ -26,67 +30,20 @@ jobs:
               print('AI task sync already installed')
               raise SystemExit(0)
 
-          sync_code = r'''
-// ==================== AI TASK SYNC ====================
-// ChatGPT-managed tasks live in ai-tasks.json. They are merged by stable ID
-// into the existing task manager, while personal/local tasks remain untouched.
-async function syncAssistantTasks() {
-  try {
-    const res = await fetch('./ai-tasks.json?ts=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('ai-tasks HTTP ' + res.status);
-    const remote = await res.json();
-
-    state.todoGroups = Array.isArray(state.todoGroups) ? state.todoGroups : [];
-    state.todos = Array.isArray(state.todos) ? state.todos : [];
-
-    (remote.groups || []).forEach(rg => {
-      const i = state.todoGroups.findIndex(g => g.id === rg.id);
-      const clean = { ...rg, source: 'chatgpt' };
-      if (i >= 0) state.todoGroups[i] = { ...state.todoGroups[i], ...clean };
-      else state.todoGroups.push(clean);
-    });
-
-    (remote.todos || []).forEach(rt => {
-      const i = state.todos.findIndex(t => t.id === rt.id);
-      const clean = {
-        ...rt,
-        source: 'chatgpt',
-        notes: Array.isArray(rt.notes) ? rt.notes : [],
-        subtasks: Array.isArray(rt.subtasks) ? rt.subtasks : [],
-        priority: typeof rt.priority === 'number' ? rt.priority : 3,
-        completedAt: rt.completedAt || null,
-        dueDate: rt.dueDate || null,
-        groupId: rt.groupId || null
-      };
-      // Remote file is authoritative only for stable ChatGPT task IDs.
-      // This never edits or deletes personal tasks created in the app.
-      if (i >= 0) state.todos[i] = { ...state.todos[i], ...clean };
-      else state.todos.push(clean);
-    });
-
-    await storageSet(state);
-  } catch (e) {
-    // Offline use stays fully functional with the last local copy.
-    console.warn('AI task sync:', e);
-  }
-}
-
-'''
-
+          sync_code = base64.b64decode(os.environ['SYNC_CODE_B64']).decode('utf-8')
           anchor = '// ==================== LEVEL TITLES ===================='
           if anchor not in s:
               raise SystemExit('Could not find insertion anchor for sync function')
           s = s.replace(anchor, sync_code + anchor, 1)
 
-          load_anchor = "  // If a timer was running when app last closed, recompute time-left"
+          load_anchor = '  // If a timer was running when app last closed, recompute time-left'
           if load_anchor not in s:
               raise SystemExit('Could not find loadState insertion anchor')
-          s = s.replace(load_anchor, "  // Pull ChatGPT-managed tasks before rendering local state.\n  await syncAssistantTasks();\n\n" + load_anchor, 1)
+          s = s.replace(load_anchor, '  // Pull ChatGPT-managed tasks before rendering local state.\n  await syncAssistantTasks();\n\n' + load_anchor, 1)
 
           p.write_text(s, encoding='utf-8')
           print('Installed AI task sync')
           PY
-
       - name: Commit patch if needed
         run: |
           if git diff --quiet -- app.js; then
