@@ -1,0 +1,179 @@
+name: Add September business tasks
+
+on:
+  push:
+    paths:
+      - .github/workflows/add-september-business-tasks.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-task-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add confirmed September tasks
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path('ai-tasks.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          groups = data.setdefault('groups', [])
+          todos = data.setdefault('todos', [])
+
+          def ensure_group(group_id, name):
+              if not any(g.get('id') == group_id for g in groups):
+                  groups.append({
+                      'id': group_id,
+                      'name': name,
+                      'collapsed': False,
+                      'createdAt': '2026-09-02'
+                  })
+
+          ensure_group('ai-novahair-growth', 'NovaHair — צמיחה והצעה')
+          ensure_group('ai-business-brain', 'מוח העסק')
+
+          new_tasks = [
+              {
+                  'id': 'ai-20260902-task-18-sales-page-angles',
+                  'text': '18. לבדוק זוויות נוספות לדף המכירה של NovaHair',
+                  'done': False,
+                  'priority': 1,
+                  'notes': [
+                      'מטרה: לבדוק האם זווית מכירה חדשה משפרת רכישות בלי לשנות במקביל מחיר, חבילות או מסלול קופה.',
+                      'לשמור את דף המכירה הנוכחי כגרסת ביקורת.',
+                      'הזוויות שעלו במחקר: עלות השורשים החוזרת, ביטחון בגוון, כיסוי שיער לבן ושורשים עקשניים, ושגרת צביעה ביתית מלאה ופשוטה.',
+                      'המדד הראשי: שיעור רכישה. מדדי משנה: הוספה לעגלה, התחלת קופה, סכום הזמנה ממוצע ובחירת חבילת 6.',
+                      'לא להכריז על מנצח בגלל יום אחד חזק או מספר קטן של רכישות.'
+                  ],
+                  'subtasks': [
+                      {'id':'control','text':'לשמור גרסת ביקורת של הדף הנוכחי','done':False},
+                      {'id':'angle-roots-cost','text':'לבנות גרסה סביב עלות השורשים שחוזרת שוב ושוב','done':False},
+                      {'id':'angle-shade','text':'לבנות גרסה סביב ביטחון בגוון והפחד מתוצאה שונה','done':False},
+                      {'id':'angle-gray','text':'לבנות גרסה סביב שיער לבן ושורשים עקשניים, במיוחד ברקות וקו השיער','done':False},
+                      {'id':'angle-routine','text':'לבנות גרסה סביב שגרת צביעה ביתית מלאה ופשוטה','done':False},
+                      {'id':'tracking','text':'לוודא מדידה תקינה לכל גרסה לפני הסקת מסקנות','done':False}
+                  ],
+                  'goalId': None,
+                  'dueDate': None,
+                  'groupId': 'ai-novahair-growth',
+                  'createdAt': '2026-09-02',
+                  'completedAt': None,
+                  'source': 'chatgpt'
+              },
+              {
+                  'id': 'ai-20260902-task-21-color-marketing',
+                  'text': '21. שיווק לפי צבעים + בדיקת והוספת גוונים נוספים',
+                  'done': False,
+                  'priority': 1,
+                  'notes': [
+                      'שחור וחום כהה היו רוב הביקוש שנצפה; חום בהיר התחזק בסוף התקופה.',
+                      'המטרה היא לתת יותר נוכחות לגוונים שהלקוחות באמת קונות, ובמקביל למצוא גוון נוסף שיכול להרחיב את השוק בלי לסבך את התפעול.',
+                      'לא להוסיף גוון רק בשביל מגוון; צריך לוודא ביקוש, אמינות תוצאה, זמינות ספק ועלות.'
+                  ],
+                  'subtasks': [
+                      {'id':'front-black-dark-brown','text':'לתת יותר נוכחות לשחור ולחום כהה במודעות, גלריה ודוגמאות','done':False},
+                      {'id':'light-brown','text':'להמשיך לבדוק האם העלייה בביקוש לחום בהיר נמשכת','done':False},
+                      {'id':'creative-by-shade','text':'לבדוק אותו רעיון שיווקי עם גוונים שונים כדי למדוד השפעת צבע','done':False},
+                      {'id':'supplier-shades','text':'לבדוק אצל CJ, SourcinBox וספקים אחרים אילו גוונים טבעיים נוספים קיימים','done':False},
+                      {'id':'rank-shades','text':'לדרג כל גוון חדש לפי ביקוש, איכות תוצאה, זמינות, עלות ושילוח','done':False},
+                      {'id':'validate-new-shade','text':'לפני הוספה לחנות לוודא שהשם והתמונה תואמים לתוצאה בפועל','done':False}
+                  ],
+                  'goalId': None,
+                  'dueDate': None,
+                  'groupId': 'ai-novahair-growth',
+                  'createdAt': '2026-09-02',
+                  'completedAt': None,
+                  'source': 'chatgpt'
+              },
+              {
+                  'id': 'ai-20260902-task-27-six-pack-complete',
+                  'text': '27. להפוך את חבילת 6 הבקבוקים לחבילה המלאה ב־₪319',
+                  'done': False,
+                  'priority': 1,
+                  'notes': [
+                      'המחירים הנוכחיים: 2 בקבוקים ₪189, 4 בקבוקים ₪239, 6 בקבוקים ₪319.',
+                      'המעבר מ־2 ל־4 עולה עוד ₪50, ואילו מ־4 ל־6 עולה עוד ₪80. לכן חבילת 4 יוצרת נקודת עצירה טבעית.',
+                      'עלות שנמסרה ל־6 בקבוקים היא בערך $48 כולל שילוח. לכן לא למהר להוריד ל־₪289; קודם לבדוק תוספת ערך.',
+                      'המועמד המוביל: טיפול הזנה לאחר הצביעה, במיוחד מסכת לחות עם שמן ארגן וביוטין. מזהה CJYD2636378; מחיר מוצר שנצפה כ־$1.74.',
+                      'מועמד נוסף: מרכך לשיער צבוע CJPF3087593, שנצפה סביב $2.02. לפסול אם הוא מפקיד פיגמנט או מחייב בחירת גוון.',
+                      'אפשרויות נוספות לחיפוש: מסכת סרמידים, חומצות אמינו, חומצה היאלורונית, ארגן, אבוקדו, מקדמיה, שיאה, מרכך לאחר צביעה וטיפול לחותי.',
+                      'כאופציה קטנה נוספת: משחת הגנה לקו השיער או מגבונים להסרת כתמי צבע.',
+                      'אבקת כיסוי שורשים 2407110933081611400 מתאימה יותר כמכירה נוספת בין צביעות. מקל כיסוי שורשים 2509140612091612500 הוא חלופה. קליפסים 2604100204041622700 הם תוספת זולה בלבד.',
+                      'לא להשתמש במסכות שמפקידות צבע, קערה ומברשת כמוצר מרכזי, גלימה כסיבה לקנות את החבילה, או אוסף גדול של מתנות קטנות.',
+                      'המחקר מצא כאבים חוזרים של יובש/חספוס אחרי צביעה, לכלוך וכתמים, שורשים שחוזרים ופחד מתוצאה לא אחידה. טיפול לאחר הצביעה הוא ההתאמה הטבעית ביותר לחבילת 6.'
+                  ],
+                  'subtasks': [
+                      {'id':'keep-319','text':'להשאיר כרגע את מחיר חבילת 6 על ₪319 בזמן הבדיקה','done':False},
+                      {'id':'check-argan-biotin','text':'לבדוק CJYD2636378: גודל, מרכיבים, משקל, מסמכים ועלות שילוח משולבת','done':False},
+                      {'id':'check-color-conditioner','text':'לבדוק CJPF3087593 ולפסול אם יש פיגמנט או גוונים','done':False},
+                      {'id':'search-alternatives','text':'לחפש טיפול ניטרלי נוסף: סרמידים / חומצות אמינו / חומצה היאלורונית / ארגן','done':False},
+                      {'id':'check-stain-products','text':'לבדוק משחת הגנה לקו השיער או מגבונים נגד כתמים בעלות נמוכה','done':False},
+                      {'id':'combined-landed-cost','text':'לקבל עלות אמיתית של המוצר המשלים בתוך חבילת 6 לישראל, לא שילוח נפרד','done':False},
+                      {'id':'bundle-creative','text':'לבנות הצגת חבילה נקייה: 6 NovaHair + ערכת צביעה + טיפול לאחר הצביעה','done':False},
+                      {'id':'measure-six-pack','text':'למדוד האם שיעור הבחירה בחבילת 6 וסכום ההזמנה הממוצע עולים','done':False}
+                  ],
+                  'goalId': None,
+                  'dueDate': None,
+                  'groupId': 'ai-novahair-growth',
+                  'createdAt': '2026-09-02',
+                  'completedAt': None,
+                  'source': 'chatgpt'
+              },
+              {
+                  'id': 'ai-20260902-task-32-business-brain',
+                  'text': '32. להפוך את מוח העסק למדור קבוע בתוך Dopamodoro',
+                  'done': False,
+                  'priority': 1,
+                  'notes': [
+                      'המטרה היא שהידע העסקי לא יהיה מפוזר במסמכים נפרדים, אלא יהיה נגיש גם בממשק של Dopamodoro וגם לסוכן בצורה מובנית.',
+                      'המבנה המבוקש: 00 מפת המוח והוראות שימוש; 01 האמת העסקית; 02 הצעות ומחירים; 03 קופי ומסרים; 04 דואר ושימור; 05 פרסום וקריאייטיב; 06 דפים ומשפכים; 07 לקוחות והתנגדויות; 08 מקורות חיצוניים; 09 ניסויים ותוצאות; 10 החלטות אסטרטגיות; 98 תיבת כניסה; 99 ארכיון.',
+                      'סוכן חדש צריך לקרוא קודם הוראות, אחר כך את האמת העסקית, ורק אז את התחום הרלוונטי.',
+                      'צריך להפריד בין עובדה, השערה, תובנה, החלטה וחסם.',
+                      'תיבת הכניסה היא מקום לחומר חדש ולא מקור אמת.',
+                      'אין לשמור במאגר ציבורי סיסמאות, אסימונים, פרטי תשלום או פרטי לקוחות אישיים.'
+                  ],
+                  'subtasks': [
+                      {'id':'brain-tab','text':'להוסיף בתוך אפליקציית הווב של Dopamodoro מדור ברור בשם מוח העסק','done':False},
+                      {'id':'brain-architecture','text':'לבנות את מבנה 00–10, 98 ו־99 עם נושאים ותתי־נושאים','done':False},
+                      {'id':'agent-instructions','text':'ליצור הוראות התחלה ברורות לסוכן: מה לקרוא, מה גובר במקרה של סתירה ואיך לעדכן','done':False},
+                      {'id':'machine-index','text':'ליצור מפתח קריא למכונה שממפה כל תחום למקור שלו','done':False},
+                      {'id':'current-truth','text':'ליצור מקור אמת עסקי נוכחי אחד שמקבל עדיפות על מסמכים ישנים','done':False},
+                      {'id':'inbox','text':'ליצור תיבת כניסה אחת לתמלולים, מחקרים, ספקים ורעיונות חדשים','done':False},
+                      {'id':'novahair-research','text':'להכניס את מחקר הצביעה הביתית והמוצרים המשלימים למוח העסק','done':False},
+                      {'id':'offer-research','text':'להכניס את מבנה 2/4/6 והדיון על ₪319 מול ₪289','done':False},
+                      {'id':'experiment-research','text':'להכניס את תוכנית מבחני זוויות דף המכירה','done':False}
+                  ],
+                  'goalId': None,
+                  'dueDate': None,
+                  'groupId': 'ai-business-brain',
+                  'createdAt': '2026-09-02',
+                  'completedAt': None,
+                  'source': 'chatgpt'
+              }
+          ]
+
+          existing = {t.get('id') for t in todos}
+          for task in new_tasks:
+              if task['id'] not in existing:
+                  todos.append(task)
+
+          data['syncRevision'] = max(int(data.get('syncRevision', 0)) + 1, 14)
+          data['updatedAt'] = '2026-09-02'
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Commit updated task feed
+        run: |
+          if git diff --quiet -- ai-tasks.json; then
+            echo "Tasks already present"
+            exit 0
+          fi
+          git config user.name "dopamodoro-ai-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add ai-tasks.json
+          git commit -m "Sync September NovaHair and Business Brain tasks"
+          git push
